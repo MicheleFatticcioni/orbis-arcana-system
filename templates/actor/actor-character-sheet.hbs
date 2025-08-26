@@ -99,9 +99,15 @@
         </section>
 
         {{!-- For the main features list, span the right two columns --}}
-        <section class="main">
-          {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
-          {{> "systems/spn-system/templates/actor/parts/actor-features.hbs"}}
+        <section class="main border p-2" style="border: 1px solid #333">
+          {{#each system.skills as |skill key|}}
+            {{#if (eq skill.mod 'str')}}
+              <div class="flex justify-between my-3">
+                <span>{{key}}</span>
+                <span>{{skill.value}}</span>
+              </div>
+            {{/if}}
+          {{/each}}
         </section>
 
         {{!-- For the main features list, span the right two columns --}}

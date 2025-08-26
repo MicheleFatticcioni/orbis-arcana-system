@@ -59,7 +59,7 @@ export class SPNSystemActor extends Actor {
     systemData.health.value = health;
 
     const stress = Math.ceil(
-      (systemData.abilities.int.value + systemData.abilities.wis.value) / 2 + 1
+      (systemData.abilities.int.value + systemData.abilities.wil.value) / 2 + 1
     );
     systemData.stress.value = stress;
 

@@ -71,6 +71,10 @@ Handlebars.registerHelper('stringify', function (obj) {
   return JSON.stringify(obj);
 });
 
+Handlebars.registerHelper('eq', function (a, b) {
+  return a === b
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

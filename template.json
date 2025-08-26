@@ -26,6 +26,60 @@
           "value": 0
         }
       },
+      "skills": {
+        "fight": {
+          "value": 1,
+          "mod": "str"
+        },
+        "firearms": {
+          "value": 1,
+          "mod": "str"
+        },
+        "movement": {
+          "value": 1,
+          "mod": "str"
+        },
+        "dodge": {
+          "value": 1,
+          "mod": "dex"
+        },
+        "stealth": {
+          "value": 1,
+          "mod": "dex"
+        },
+        "sleight_of_hand": {
+          "value": 1,
+          "mod": "dex"
+        },
+        "rituals": {
+          "value": 1,
+          "mod": "wil"
+        },
+        "intuition": {
+          "value": 1,
+          "mod": "wil"
+        },
+        "empathy": {
+          "value": 1,
+          "mod": "wil"
+        },
+        "perception": {
+          "value": 1,
+          "mod": "wil"
+        },
+        "occultism": {
+          "value": 1,
+          "mod": "int"
+        },
+        "investigation": {
+          "value": 1,
+          "mod": "int"
+        },
+        "informatics": {
+          "value": 1,
+          "mod": "int"
+        }
+      },
       "abilities": {
         "str": {
           "value": 5
@@ -36,7 +90,7 @@
         "int": {
           "value": 5
         },
-        "wis": {
+        "wil": {
           "value": 10
         }
       }
