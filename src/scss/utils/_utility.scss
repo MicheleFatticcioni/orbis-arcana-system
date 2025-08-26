@@ -1,0 +1,193 @@
+// 1. Mappa valori spaziatura
+$spacings: (
+  0: 0,
+  1: 4px,
+  2: 8px,
+  3: 12px,
+  4: 16px,
+  5: 20px,
+);
+
+// 2. Mappa font size
+$font-sizes: (
+  sm: 12px,
+  base: 16px,
+  lg: 20px,
+  xl: 24px,
+);
+
+// 3. Border radius
+$radius: (
+  sm: 4px,
+  md: 8px,
+  lg: 12px,
+  full: 9999px,
+);
+
+// ------------------------------
+// Generate Margin & Padding
+// ------------------------------
+@each $key, $value in $spacings {
+  // Margin
+  .m-#{$key} {
+    margin: $value;
+  }
+  .mx-#{$key} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+  .my-#{$key} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+  .mt-#{$key} {
+    margin-top: $value;
+  }
+  .mb-#{$key} {
+    margin-bottom: $value;
+  }
+  .ml-#{$key} {
+    margin-left: $value;
+  }
+  .mr-#{$key} {
+    margin-right: $value;
+  }
+
+  // Padding
+  .p-#{$key} {
+    padding: $value;
+  }
+  .px-#{$key} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+  .py-#{$key} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+  .pt-#{$key} {
+    padding-top: $value;
+  }
+  .pb-#{$key} {
+    padding-bottom: $value;
+  }
+  .pl-#{$key} {
+    padding-left: $value;
+  }
+  .pr-#{$key} {
+    padding-right: $value;
+  }
+
+  // Gap
+  .gap-#{$key} {
+    gap: $value;
+  }
+  .gap-x-#{$key} {
+    column-gap: $value;
+  }
+  .gap-y-#{$key} {
+    row-gap: $value;
+  }
+}
+
+// ------------------------------
+// Border Radius
+// ------------------------------
+@each $name, $radiusValue in $radius {
+  .rounded-#{$name} {
+    border-radius: $radiusValue;
+  }
+}
+
+// ------------------------------
+// Font Sizes
+// ------------------------------
+@each $name, $size in $font-sizes {
+  .text-#{$name} {
+    font-size: $size;
+  }
+}
+
+// ------------------------------
+// Flex Utilities
+// ------------------------------
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.items-center {
+  align-items: center;
+}
+.items-start {
+  align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-around {
+  justify-content: space-around;
+}
+
+// ------------------------------
+// Display Utilities
+// ------------------------------
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
+
+// ------------------------------
+// Text Alignment
+// ------------------------------
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+// ------------------------------
+// Width & Height (semplici)
+// ------------------------------
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.w-fit {
+  width: fit-content;
+}
+.h-fit {
+  height: fit-content;
+}
+
+// ------------------------------
+// INPUT
+// ------------------------------
+.input-t-center {
+  text-align: center !important;
+}
+.small-input {
+  max-width: 40px;
+  width: 100%;
+}
