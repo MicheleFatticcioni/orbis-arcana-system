@@ -8,12 +8,12 @@ SPN_SYSTEM.abilities = {
   str: "SPN_SYSTEM.Ability.Str.long",
   dex: "SPN_SYSTEM.Ability.Dex.long",
   int: "SPN_SYSTEM.Ability.Int.long",
-  wis: "SPN_SYSTEM.Ability.Wis.long",
+  wil: "SPN_SYSTEM.Ability.Wil.long",
 };
 
 SPN_SYSTEM.abilityAbbreviations = {
   str: "SPN_SYSTEM.Ability.Str.abbr",
   dex: "SPN_SYSTEM.Ability.Dex.abbr",
   int: "SPN_SYSTEM.Ability.Int.abbr",
-  wis: "SPN_SYSTEM.Ability.Wis.abbr",
+  wil: "SPN_SYSTEM.Ability.Wil.abbr",
 };
