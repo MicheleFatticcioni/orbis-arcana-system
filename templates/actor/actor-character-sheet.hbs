@@ -103,8 +103,8 @@
           {{#each system.skills as |skill key|}}
             {{#if (eq skill.mod 'str')}}
               <div class="flex justify-between my-3">
-                <span>{{key}}</span>
-                <span>{{skill.value}}</span>
+                <span class="ability-mod rollable" data-roll="{{sum (lookup (lookup ../system.abilities skill.mod) "value") skill.value}}d6" data-label="{{localize (lookup @root.config.skills Fig)}}">{{key}} - {{skill.mod}}</span>
+                {{skill.value}}
               </div>
             {{/if}}
           {{/each}}

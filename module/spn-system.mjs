@@ -1,18 +1,18 @@
 // Import document classes.
-import { SPNSystemActor } from './documents/actor.mjs';
-import { SPNSystemItem } from './documents/item.mjs';
+import { SPNSystemActor } from "./documents/actor.mjs";
+import { SPNSystemItem } from "./documents/item.mjs";
 // Import sheet classes.
-import { SPNSystemActorSheet } from './sheets/actor-sheet.mjs';
-import { SPNSystemItemSheet } from './sheets/item-sheet.mjs';
+import { SPNSystemActorSheet } from "./sheets/actor-sheet.mjs";
+import { SPNSystemItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
-import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-import { SPN_SYSTEM } from './helpers/config.mjs';
+import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
+import { SPN_SYSTEM } from "./helpers/config.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once('init', function () {
+Hooks.once("init", function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.spnsystem = {
@@ -29,7 +29,7 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d10',
+    formula: "1d10",
     decimals: 2,
   };
 
@@ -43,15 +43,15 @@ Hooks.once('init', function () {
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('spn-system', SPNSystemActorSheet, {
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("spn-system", SPNSystemActorSheet, {
     makeDefault: true,
-    label: 'SPN_SYSTEM.SheetLabels.Actor',
+    label: "SPN_SYSTEM.SheetLabels.Actor",
   });
-  Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('spn-system', SPNSystemItemSheet, {
+  Items.unregisterSheet("core", ItemSheet);
+  Items.registerSheet("spn-system", SPNSystemItemSheet, {
     makeDefault: true,
-    label: 'SPN_SYSTEM.SheetLabels.Item',
+    label: "SPN_SYSTEM.SheetLabels.Item",
   });
 
   // Preload Handlebars templates.
@@ -63,25 +63,30 @@ Hooks.once('init', function () {
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here is a useful example:
-Handlebars.registerHelper('toLowerCase', function (str) {
+Handlebars.registerHelper("toLowerCase", function (str) {
   return str.toLowerCase();
 });
 
-Handlebars.registerHelper('stringify', function (obj) {
+Handlebars.registerHelper("stringify", function (obj) {
   return JSON.stringify(obj);
 });
 
-Handlebars.registerHelper('eq', function (a, b) {
-  return a === b
+Handlebars.registerHelper("eq", function (a, b) {
+  return a === b;
 });
 
+Handlebars.registerHelper("sum", function (...args) {
+  const options = args.pop(); // Rimuove l’oggetto options
+  console.log(args);
+  return args.reduce((acc, val) => acc + Number(val), 0);
+});
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once('ready', function () {
+Hooks.once("ready", function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-  Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
+  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
 /* -------------------------------------------- */
@@ -97,10 +102,10 @@ Hooks.once('ready', function () {
  */
 async function createItemMacro(data, slot) {
   // First, determine if this is a valid owned item.
-  if (data.type !== 'Item') return;
-  if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
+  if (data.type !== "Item") return;
+  if (!data.uuid.includes("Actor.") && !data.uuid.includes("Token.")) {
     return ui.notifications.warn(
-      'You can only create macro buttons for owned Items'
+      "You can only create macro buttons for owned Items"
     );
   }
   // If it is, retrieve it based on the uuid.
@@ -114,10 +119,10 @@ async function createItemMacro(data, slot) {
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
-      type: 'script',
+      type: "script",
       img: item.img,
       command: command,
-      flags: { 'spn-system.itemMacro': true },
+      flags: { "spn-system.itemMacro": true },
     });
   }
   game.user.assignHotbarMacro(macro, slot);
@@ -132,7 +137,7 @@ async function createItemMacro(data, slot) {
 function rollItemMacro(itemUuid) {
   // Reconstruct the drop data so that we can load the item.
   const dropData = {
-    type: 'Item',
+    type: "Item",
     uuid: itemUuid,
   };
   // Load the item from the uuid.

@@ -1,20 +1,18 @@
 {
   "SPN_SYSTEM": {
     "Ability": {
-      "Str": { "long": "Strength", "abbr": "str" },
-      "Con": { "long": "Constitution", "abbr": "con" },
-      "Dex": { "long": "Dexterity", "abbr": "dex" },
-      "Int": { "long": "Intelligence", "abbr": "int" },
-      "Wil": { "long": "Wisdom", "abbr": "wil" },
-      "Cha": { "long": "Charisma", "abbr": "cha" }
+      "Str": { "long": "Forza", "abbr": "for" },
+      "Dex": { "long": "Destrezza", "abbr": "des" },
+      "Int": { "long": "Intelligenza", "abbr": "int" },
+      "Wil": { "long": "Saggezza", "abbr": "sag" }
     },
     "SheetLabels": {
-      "Actor": "SPNSystem Actor Sheet",
+      "Actor": "SPNSystem scheda personaggio",
       "Item": "SPNSystem Item Sheet"
     },
     "Item": {
       "Spell": {
-        "SpellLVL": "Level {level} Spells",
+        "SpellLVL": "Livello {level} Spells",
         "AddLVL": "Add LVL {level}"
       }
     },
@@ -26,7 +24,7 @@
       "Inactive": "Inactive Effects"
     },
     "Skills": {
-      "Fig": { "long": "Fight" }
+      "Fig": { "long": "Combattimento" }
     }
   },
 
