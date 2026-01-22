@@ -297,24 +297,112 @@ export class SPNSystemActorSheet extends ActorSheet {
               callback: (html) => {
                 const modifier =
                   Number(html.find('[name="modifier"]').val()) || 0;
+                const cursedDice =
+                  this.actor.system.tracks.dadi_maledetti.value || 0;
 
-                const diceCount =
-                  attribute.value + skill.value + modifier + cursedDice;
-                const formula = `${Math.max(0, diceCount)}d6`;
+                // Prepare separate pools
+                const attrValue = attribute.value;
+                const skillValue = skill.value;
 
-                let label = `${dataset.label} Check`;
-                let flavor = `Rolling <b>${dataset.label}</b> (${attributeKey}: ${attribute.value} + ${dataset.label}: ${skill.value} + Mod: ${modifier})`;
+                // Logic for modifier: Positive mod adds "Bonus" dice (Black). Negative mod reduces skill then attribute dice.
+                let effectiveAttr = attrValue;
+                let effectiveSkill = skillValue;
+                let effectiveMod = modifier;
 
-                if (cursedDice > 0) {
-                  flavor += `<br><span style="color: var(--primary-color)">Dadi Maledetti: ${cursedDice}</span>`;
+                if (effectiveMod < 0) {
+                  let reduce = Math.abs(effectiveMod);
+                  if (effectiveSkill >= reduce) {
+                    effectiveSkill -= reduce;
+                    reduce = 0;
+                  } else {
+                    reduce -= effectiveSkill;
+                    effectiveSkill = 0;
+                    effectiveAttr = Math.max(0, effectiveAttr - reduce);
+                  }
+                  effectiveMod = 0;
                 }
 
-                let roll = new Roll(formula, this.actor.getRollData());
-                roll.toMessage({
-                  speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                  flavor: flavor,
-                  rollMode: game.settings.get("core", "rollMode"),
-                });
+                // Roll functions
+                async function rollPool(count) {
+                  if (count <= 0) return [];
+                  const r = new Roll(`${count}d6`);
+                  await r.evaluate();
+                  return r.dice[0].results;
+                }
+
+                (async () => {
+                  const attrResults = await rollPool(effectiveAttr);
+                  const skillResults = await rollPool(effectiveSkill);
+                  const modResults = await rollPool(effectiveMod);
+                  const cursedResults = await rollPool(cursedDice);
+
+                  // Helper to get stats
+                  const getStats = (results) => ({
+                    success: results.filter((d) => d.result === 6).length,
+                    cursed: results.filter((d) => d.result === 1).length,
+                  });
+
+                  const attrStats = getStats(attrResults);
+                  const skillStats = getStats(skillResults);
+                  const modStats = getStats(modResults);
+                  const cursedStats = getStats(cursedResults);
+
+                  // Count successes
+                  const allResults = [
+                    ...attrResults,
+                    ...skillResults,
+                    ...modResults,
+                    ...cursedResults,
+                  ];
+                  const successCount = allResults.filter(
+                    (d) => d.result === 6,
+                  ).length;
+                  const totalCursedCount = allResults.filter(
+                    (d) => d.result === 1,
+                  ).length; // User said total skull count is 1 in screen, let's count all 1s or just cursed ones?
+                  // Screen shows "Skull 1" in footer. Acume had "Skull 1".
+                  // So total is sum of all.
+
+                  const cardData = {
+                    label: dataset.label,
+                    hasAttribute: attrResults.length > 0,
+                    attributeKey: attributeKey.toUpperCase(),
+                    attributeDice: attrResults,
+                    attributeStats: attrStats,
+
+                    hasSkill: skillResults.length > 0,
+                    skillLabel: dataset.label.toUpperCase(),
+                    skillDice: skillResults,
+                    skillStats: skillStats,
+
+                    hasCursed: cursedResults.length > 0,
+                    cursedDice: cursedResults,
+                    cursedStats: cursedStats,
+
+                    hasModifier: modResults.length > 0,
+                    modifierDice: modResults,
+                    modifierStats: modStats,
+
+                    successCount: successCount,
+                    cursedCount: totalCursedCount,
+                  };
+
+                  const html = await renderTemplate(
+                    "systems/spn-system/templates/chat/roll-card.hbs",
+                    cardData,
+                  );
+
+                  if (game.settings.get("core", "rollMode") !== "blind") {
+                    AudioHelper.play({ src: CONFIG.sounds.dice });
+                  }
+
+                  ChatMessage.create({
+                    user: game.user.id,
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                    content: html,
+                    type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+                  });
+                })();
               },
             },
           },

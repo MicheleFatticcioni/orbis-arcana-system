@@ -768,17 +768,6 @@
   /* Editor Overrides */
   /* Dialog */
   /* Dialog Window Override for .orbis-dialog class added in JS */
-  /* Chat Roll Card */
-  /* Dice Coloring via Filters (Base is RED) */
-  /* Attribute: Red (Default) */
-  /* Skill: Green */
-  /* Hue Rotate from Red (~0deg) to Green (~120deg) */
-  /* Cursed: Purple */
-  /* Hue Rotate from Red (~0deg) to Purple (~280deg or -80deg) */
-  /* Modifier: Black */
-  /* Grayscale + Darken */
-  /* Successes Icon (Swords/Cross) */
-  /* Cursed Icon (Skull) */
 }
 .spn-system .item-form {
   font-family: "Roboto", sans-serif;
@@ -1230,7 +1219,10 @@
   background: #2a5caa;
   box-shadow: 0 0 10px #2a5caa;
 }
-.spn-system .orbis-chat-roll {
+
+/* Global Chat Styles */
+/* Chat Roll Card */
+.orbis-chat-roll {
   font-family: "Roboto", sans-serif;
   background: #f1f1f1;
   color: #1a1a1a;
@@ -1239,68 +1231,122 @@
   padding: 10px;
   margin-bottom: 5px;
 }
-.spn-system .orbis-chat-roll .roll-header h2 {
+
+.orbis-chat-roll .orbis-divider,
+.orbis-chat-roll .divider {
+  border-bottom: 2px solid #ccc;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.orbis-chat-roll .roll-header h2 {
   font-family: "Cinzel", serif;
-  color: var(--secondary-color);
+  color: #1a1a1a;
+  /* Using Hex for safety if var not available globally */
   text-align: center;
-  border-bottom: 2px solid var(--primary-color);
+  border-bottom: 2px solid #e63946;
   margin-bottom: 15px;
   padding-bottom: 5px;
   text-transform: uppercase;
 }
-.spn-system .orbis-chat-roll .roll-sections {
+
+.orbis-chat-roll .roll-sections {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  /* Vertical stack */
+  gap: 15px;
 }
-.spn-system .orbis-chat-roll .section-label {
-  font-size: 0.8em;
-  color: #666;
-  margin: 0 0 5px 0;
-  text-transform: uppercase;
-  border-bottom: 1px solid #ccc;
+
+.orbis-chat-roll .roll-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-.spn-system .orbis-chat-roll .dice-row {
+
+.orbis-chat-roll .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 2px;
+}
+
+.orbis-chat-roll .section-label {
+  font-weight: bold;
+  color: #333;
+  text-transform: capitalize;
+  border: none;
+  font-size: 1em;
+}
+
+.orbis-chat-roll .section-stats {
+  font-size: 0.9em;
+  color: #555;
+  font-weight: bold;
+}
+
+.orbis-chat-roll .section-stats i {
+  margin-left: 5px;
+}
+
+.orbis-chat-roll .dice-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
 }
-.spn-system .orbis-chat-roll .die {
+
+/* Specific selector for dice in chat vs sheet */
+.orbis-chat-roll .die {
   width: 30px;
   height: 30px;
   border: none;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
 }
-.spn-system .orbis-chat-roll .skill-die {
+
+/* Dice Coloring via Filters (Base is RED) */
+/* Attribute: Red (Default) */
+/* Skill: Green - Hue Rotate from Red (~0deg) to Green (~120deg) */
+.orbis-chat-roll .skill-die {
   filter: hue-rotate(100deg) brightness(1.2);
 }
-.spn-system .orbis-chat-roll .cursed-die {
+
+/* Cursed: Purple - Hue Rotate from Red (~0deg) to Purple (~290deg) */
+.orbis-chat-roll .cursed-die {
   filter: hue-rotate(290deg) brightness(0.9);
 }
-.spn-system .orbis-chat-roll .modifier-die {
-  filter: grayscale(100%) brightness(0.3) contrast(200%);
+
+/* Modifier: Black - Grayscale + Darken */
+.orbis-chat-roll .modifier-die {
+  filter: grayscale(100%) brightness(0.3);
 }
-.spn-system .orbis-chat-roll .roll-footer {
-  margin-top: 15px;
+
+.orbis-chat-roll .roll-footer {
+  border: none;
+  margin-top: 0;
   padding-top: 10px;
-  border-top: 2px solid #ccc;
-  font-size: 1.5em;
+}
+
+.orbis-chat-roll .total-stats {
+  font-size: 2em;
   font-weight: bold;
   color: #333;
   display: flex;
-  justify-content: space-around;
-}
-.spn-system .orbis-chat-roll .success-count,
-.spn-system .orbis-chat-roll .cursed-count {
-  display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
-.spn-system .orbis-chat-roll .success-count i {
+
+/* Icons styling */
+.orbis-chat-roll .fa-times {
   color: #333;
+  /* Success X */
 }
-.spn-system .orbis-chat-roll .cursed-count {
-  color: var(--primary-color);
-  /* Red skull if needed, or black */
+
+.orbis-chat-roll .fa-skull {
+  color: #333;
+  /* Default Skull */
 }
+
+/*# sourceMappingURL=spn-system.css.map */

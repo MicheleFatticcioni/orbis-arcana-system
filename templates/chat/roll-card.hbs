@@ -2,11 +2,14 @@
   <div class="roll-header">
     <h2>{{label}}</h2>
   </div>
+  <div class="divider"></div>
 
   <div class="roll-sections">
     {{#if hasAttribute}}
       <div class="roll-section attribute">
-        <h4 class="section-label">{{attributeKey}}</h4>
+        <div class="section-header flexrow flex-between">
+          <span class="section-label">{{attributeKey}}</span>
+        </div>
         <div class="dice-row">
           {{#each attributeDice as |die|}}
             <img
@@ -21,7 +24,9 @@
 
     {{#if hasSkill}}
       <div class="roll-section skill">
-        <h4 class="section-label">{{skillLabel}}</h4>
+        <div class="section-header flexrow flex-between">
+          <span class="section-label">{{skillLabel}}</span>
+        </div>
         <div class="dice-row">
           {{#each skillDice as |die|}}
             <img
@@ -36,7 +41,9 @@
 
     {{#if hasCursed}}
       <div class="roll-section cursed">
-        <h4 class="section-label">Maledizione</h4>
+        <div class="section-header flexrow flex-between">
+          <span class="section-label">Dadi Maledetti</span>
+        </div>
         <div class="dice-row">
           {{#each cursedDice as |die|}}
             <img
@@ -51,7 +58,9 @@
 
     {{#if hasModifier}}
       <div class="roll-section modifier">
-        <h4 class="section-label">Bonus</h4>
+        <div class="section-header flexrow flex-between">
+          <span class="section-label">Bonus</span>
+        </div>
         <div class="dice-row">
           {{#each modifierDice as |die|}}
             <img
@@ -65,16 +74,15 @@
     {{/if}}
   </div>
 
-  <div class="roll-footer flexrow flex-between">
-    <div class="success-count">
+  <div class="divider"></div>
+
+  <div class="roll-footer flexrow flex-center">
+    <div class="total-stats">
       <i class="fas fa-times"></i>
       {{successCount}}
+      |
+      <i class="fas fa-skull"></i>
+      {{cursedCount}}
     </div>
-    {{#if needsCursedCount}}
-      <div class="cursed-count">
-        <i class="fas fa-skull"></i>
-        {{cursedCount}}
-      </div>
-    {{/if}}
   </div>
 </div>
