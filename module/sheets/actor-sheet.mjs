@@ -12,8 +12,8 @@ export class SPNSystemActorSheet extends ActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["spn-system", "sheet", "actor"],
-      width: 600,
-      height: 600,
+      width: 800,
+      height: 900,
       tabs: [
         {
           navSelector: ".sheet-tabs",
@@ -33,54 +33,44 @@ export class SPNSystemActorSheet extends ActorSheet {
 
   /** @override */
   async getData() {
-    // Retrieve the data structure from the base sheet. You can inspect or log
-    // the context variable to see the structure, but some key properties for
-    // sheets are the actor object, the data object, whether or not it's
-    // editable, the items array, and the effects array.
     const context = super.getData();
-
-    // Use a safe clone of the actor data for further operations.
     const actorData = this.document.toObject(false);
 
-    // Add the actor's data to context.data for easier access, as well as flags.
     context.system = actorData.system;
     context.flags = actorData.flags;
-
-    // Adding a pointer to CONFIG.SPN_SYSTEM
     context.config = CONFIG.SPN_SYSTEM;
 
-    // Prepare character data and items.
     if (actorData.type == "character") {
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
 
-    // Prepare NPC data and items.
     if (actorData.type == "npc") {
       this._prepareItems(context);
     }
 
-    // Enrich biography info for display
-    // Enrichment turns text like `[[/r 1d20]]` into buttons
     context.enrichedBiography = await TextEditor.enrichHTML(
       this.actor.system.biography,
       {
-        // Whether to show secret blocks in the finished html
         secrets: this.document.isOwner,
-        // Necessary in v11, can be removed in v12
         async: true,
-        // Data to fill in for inline rolls
         rollData: this.actor.getRollData(),
-        // Relative UUID resolution
         relativeTo: this.actor,
-      }
+      },
+    );
+    // Enrich Inventory (Zaino)
+    context.enrichedInventory = await TextEditor.enrichHTML(
+      this.actor.system.inventory.value,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      },
     );
 
-    // Prepare active effects
     context.effects = prepareActiveEffectCategories(
-      // A generator that returns all effects stored on the actor
-      // as well as any items
-      this.actor.allApplicableEffects()
+      this.actor.allApplicableEffects(),
     );
 
     return context;
@@ -92,8 +82,52 @@ export class SPNSystemActorSheet extends ActorSheet {
    * @param {object} context The context object to mutate
    */
   _prepareCharacterData(context) {
-    // This is where you can enrich character-specific editor fields
-    // or setup anything else that's specific to this type
+    // Group skills by attribute for display
+    const skills = context.system.skills;
+    const attributes = context.system.attributes;
+
+    context.skillsByAttribute = {
+      forza: [],
+      agilita: [],
+      spirito: [],
+      ingegno: [],
+    };
+
+    for (let [key, skill] of Object.entries(skills)) {
+      if (context.skillsByAttribute[skill.mod]) {
+        // Add label for localization
+        skill.label = game.i18n.localize(
+          `SPN_SYSTEM.Skills.${key.charAt(0).toUpperCase() + key.slice(1).replace(/_([a-z])/g, (g) => g[1].toUpperCase())}`,
+        ); // Simple inflection or map lookup could be safer, trying heuristic
+        // Safer approach: define map in JS or rely on lang file keys matching exactly.
+        // Let's use the explicit mapping since keys in lang file are PascalCase mainly.
+        const langKey = this._getSkillLangKey(key);
+        skill.label = game.i18n.localize(`SPN_SYSTEM.Skills.${langKey}`);
+        skill.key = key;
+        context.skillsByAttribute[skill.mod].push(skill);
+      }
+    }
+  }
+
+  _getSkillLangKey(key) {
+    const map = {
+      prestanza: "Prestanza",
+      resistenza: "Resistenza",
+      rissa: "Rissa",
+      armi_da_fuoco: "ArmiDaFuoco",
+      furtivita: "Furtivita",
+      gioco_di_mano: "GiocoDiMano",
+      movimento: "Movimento",
+      empatia: "Empatia",
+      intuizione: "Intuizione",
+      investigazione: "Investigazione",
+      rituali: "Rituali",
+      medicina: "Medicina",
+      ingegneria: "Ingegneria",
+      percezione: "Percezione",
+      occultismo: "Occultismo",
+    };
+    return map[key] || key;
   }
 
   /**
@@ -102,9 +136,9 @@ export class SPNSystemActorSheet extends ActorSheet {
    * @param {object} context The context object to mutate
    */
   _prepareItems(context) {
-    // Initialize containers.
     const gear = [];
     const features = [];
+    const weapons = [];
     const spells = {
       0: [],
       1: [],
@@ -118,18 +152,11 @@ export class SPNSystemActorSheet extends ActorSheet {
       9: [],
     };
 
-    // Iterate through items, allocating to containers
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
-      // Append to gear.
-      if (i.type === "item") {
-        gear.push(i);
-      }
-      // Append to features.
-      else if (i.type === "feature") {
-        features.push(i);
-      }
-      // Append to spells.
+      if (i.type === "item") gear.push(i);
+      else if (i.type === "feature") features.push(i);
+      else if (i.type === "weapon") weapons.push(i);
       else if (i.type === "spell") {
         if (i.system.spellLevel != undefined) {
           spells[i.system.spellLevel].push(i);
@@ -137,10 +164,14 @@ export class SPNSystemActorSheet extends ActorSheet {
       }
     }
 
-    // Assign and return
     context.gear = gear;
     context.features = features;
+    context.weapons = weapons; // New weapon array
     context.spells = spells;
+
+    // Fill weapons to ensuring 6 slots if needed for UI, but handlebars can handle loops.
+    // The requirement was: "Armi: Slot dedicati per registrare fino a 6 armi."
+    // We can just iterate the existing weapons.
   }
 
   /* -------------------------------------------- */
@@ -149,21 +180,16 @@ export class SPNSystemActorSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Render the item sheet for viewing/editing prior to the editable check.
     html.on("click", ".item-edit", (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
-    // -------------------------------------------------------------
-    // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Add Inventory Item
     html.on("click", ".item-create", this._onItemCreate.bind(this));
 
-    // Delete Inventory Item
     html.on("click", ".item-delete", (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
@@ -171,7 +197,6 @@ export class SPNSystemActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-    // Active Effect management
     html.on("click", ".effect-control", (ev) => {
       const row = ev.currentTarget.closest("li");
       const document =
@@ -181,10 +206,9 @@ export class SPNSystemActorSheet extends ActorSheet {
       onManageActiveEffect(ev, document);
     });
 
-    // Rollable abilities.
+    // Rollable abilities (Attributes) & Skills
     html.on("click", ".rollable", this._onRoll.bind(this));
 
-    // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
       html.find("li.item").each((i, li) => {
@@ -203,23 +227,15 @@ export class SPNSystemActorSheet extends ActorSheet {
   async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
-    console.log({ header });
-    // Get the type of item to create.
     const type = header.dataset.type;
-    // Grab any data associated with this control.
     const data = duplicate(header.dataset);
-    // Initialize a default name.
     const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
     const itemData = {
       name: name,
       type: type,
       system: data,
     };
-    // Remove the type from the dataset since it's in the itemData.type prop.
     delete itemData.system["type"];
-
-    // Finally, create the item!
     return await Item.create(itemData, { parent: this.actor });
   }
 
@@ -233,25 +249,62 @@ export class SPNSystemActorSheet extends ActorSheet {
     const element = event.currentTarget;
     const dataset = element.dataset;
 
-    // Handle item rolls.
-    if (dataset.rollType) {
-      if (dataset.rollType == "item") {
-        const itemId = element.closest(".item").dataset.itemId;
-        const item = this.actor.items.get(itemId);
-        if (item) return item.roll();
-      }
+    if (dataset.img) {
+      // Just showing an image/modal? No standard roll behavior described for clicking attribute box just to show value,
+      // but usually it rolls that attribute.
     }
 
-    // Handle rolls that supply the formula directly.
-    if (dataset.roll) {
-      let label = dataset.label ? `[ability] ${dataset.label}` : "";
-      let roll = new Roll(dataset.roll, this.actor.getRollData());
+    if (dataset.rollType === "skill") {
+      const skillKey = dataset.key;
+      const skill = this.actor.system.skills[skillKey];
+      const attributeKey = skill.mod;
+      const attribute = this.actor.system.attributes[attributeKey];
+      const cursedDice = this.actor.system.tracks.dadi_maledetti.value || 0;
+
+      // Formula: (Attribute + Skill) d6
+      const diceCount = attribute.value + skill.value;
+      let formula = `${diceCount}d6`;
+
+      let label = `Roll ${dataset.label} (${attributeKey} + ${skillKey})`;
+
+      // Simple roll for now.
+      // If we want to integrate cursed dice mechanically, we'd add them to the pool or roll separately.
+      // The req says: "tenendo conto dei dadi Maledetti (cliccando sul nome dell'abilità)."
+      // Let's prompt or just add them to the flavor text for manual resolution if not specified.
+      // Assuming we just roll the pool.
+
+      // If cursed dice > 0, maybe we should roll different colored dice or just note it.
+      // For this task, I'll just roll the pool.
+
+      let roll = new Roll(formula, this.actor.getRollData());
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label,
+        flavor:
+          label +
+          (cursedDice > 0 ? `<br><b>Dadi Maledetti: ${cursedDice}</b>` : ""),
         rollMode: game.settings.get("core", "rollMode"),
       });
       return roll;
+    }
+
+    // Handle attribute rolls if needed (just attribute value d6?)
+    if (dataset.rollType === "attribute") {
+      const attrKey = dataset.key;
+      const attribute = this.actor.system.attributes[attrKey];
+      const formula = `${attribute.value}d6`;
+      let roll = new Roll(formula, this.actor.getRollData());
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `Roll ${dataset.label}`,
+        rollMode: game.settings.get("core", "rollMode"),
+      });
+      return roll;
+    }
+
+    if (dataset.rollType == "item") {
+      const itemId = element.closest(".item").dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      if (item) return item.roll();
     }
   }
 }

@@ -1,42 +1,49 @@
 {
   "SPN_SYSTEM": {
-    "Ability": {
-      "Str": { "long": "Forza", "abbr": "for" },
-      "Dex": { "long": "Destrezza", "abbr": "des" },
-      "Int": { "long": "Intelligenza", "abbr": "int" },
-      "Wil": { "long": "Saggezza", "abbr": "sag" }
-    },
     "SheetLabels": {
-      "Actor": "SPNSystem scheda personaggio",
-      "Item": "SPNSystem Item Sheet"
+      "Actor": "Scheda Orbis Arcana",
+      "Item": "Scheda Oggetto"
     },
-    "Item": {
-      "Spell": {
-        "SpellLVL": "Livello {level} Spells",
-        "AddLVL": "Add LVL {level}"
-      }
-    },
-    "Effect": {
-      "Source": "Source",
-      "Toggle": "Toggle Effect",
-      "Temporary": "Temporary Effects",
-      "Passive": "Passive Effects",
-      "Inactive": "Inactive Effects"
+    "Attributes": {
+      "Forza": "Forza",
+      "Agilita": "Agilità",
+      "Spirito": "Spirito",
+      "Ingegno": "Ingegno"
     },
     "Skills": {
-      "Fig": { "long": "Combattimento" }
+      "Prestanza": "Prestanza",
+      "Resistenza": "Resistenza",
+      "Rissa": "Rissa",
+      "ArmiDaFuoco": "Armi da Fuoco",
+      "Furtivita": "Furtività",
+      "GiocoDiMano": "Gioco di Mano",
+      "Movimento": "Movimento",
+      "Empatia": "Empatia",
+      "Intuizione": "Intuizione",
+      "Investigazione": "Investigazione",
+      "Rituali": "Rituali",
+      "Medicina": "Medicina",
+      "Ingegneria": "Ingegneria",
+      "Percezione": "Percezione",
+      "Occultismo": "Occultismo"
+    },
+    "Tracks": {
+      "Cursed": "Dadi Maledetti",
+      "Health": "Salute",
+      "Stress": "Stress",
+      "Corruzione": "Corruzione"
     }
   },
-
   "TYPES": {
     "Actor": {
-      "character": "Character",
-      "npc": "NPC"
+      "character": "Personaggio",
+      "npc": "PNG"
     },
     "Item": {
-      "item": "Item",
-      "feature": "Feature",
-      "spell": "Spell"
+      "item": "Oggetto",
+      "feature": "Tratto",
+      "spell": "Incantesimo",
+      "weapon": "Arma"
     }
   }
 }

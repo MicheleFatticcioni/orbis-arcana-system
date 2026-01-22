@@ -4,14 +4,14 @@
     "templates": {
       "base": {
         "health": {
-          "value": 5,
-          "min": 2,
-          "max": 10
+          "value": 0,
+          "min": 0,
+          "max": 6
         },
         "stress": {
-          "value": 1,
-          "min": 2,
-          "max": 10
+          "value": 0,
+          "min": 0,
+          "max": 6
         },
         "biography": ""
       }
@@ -19,80 +19,41 @@
     "character": {
       "templates": ["base"],
       "attributes": {
-        "level": {
-          "value": 1
-        },
-        "experience": {
-          "value": 0
-        }
+        "forza": { "value": 0 },
+        "agilita": { "value": 0 },
+        "spirito": { "value": 0 },
+        "ingegno": { "value": 0 }
       },
       "skills": {
-        "fight": {
-          "value": 1,
-          "mod": "str"
-        },
-        "firearms": {
-          "value": 1,
-          "mod": "str"
-        },
-        "movement": {
-          "value": 1,
-          "mod": "str"
-        },
-        "dodge": {
-          "value": 1,
-          "mod": "dex"
-        },
-        "stealth": {
-          "value": 1,
-          "mod": "dex"
-        },
-        "sleight_of_hand": {
-          "value": 1,
-          "mod": "dex"
-        },
-        "rituals": {
-          "value": 1,
-          "mod": "wil"
-        },
-        "intuition": {
-          "value": 1,
-          "mod": "wil"
-        },
-        "empathy": {
-          "value": 1,
-          "mod": "wil"
-        },
-        "perception": {
-          "value": 1,
-          "mod": "wil"
-        },
-        "occultism": {
-          "value": 1,
-          "mod": "int"
-        },
-        "investigation": {
-          "value": 1,
-          "mod": "int"
-        },
-        "informatics": {
-          "value": 1,
-          "mod": "int"
+        "prestanza": { "value": 0, "mod": "forza" },
+        "resistenza": { "value": 0, "mod": "forza" },
+        "rissa": { "value": 0, "mod": "forza" },
+        "armi_da_fuoco": { "value": 0, "mod": "agilita" },
+        "furtivita": { "value": 0, "mod": "agilita" },
+        "gioco_di_mano": { "value": 0, "mod": "agilita" },
+        "movimento": { "value": 0, "mod": "agilita" },
+        "empatia": { "value": 0, "mod": "spirito" },
+        "intuizione": { "value": 0, "mod": "spirito" },
+        "investigazione": { "value": 0, "mod": "spirito" },
+        "rituali": { "value": 0, "mod": "spirito" },
+        "medicina": { "value": 0, "mod": "ingegno" },
+        "ingegneria": { "value": 0, "mod": "ingegno" },
+        "percezione": { "value": 0, "mod": "ingegno" },
+        "occultismo": { "value": 0, "mod": "ingegno" }
+      },
+      "tracks": {
+        "dadi_maledetti": {
+          "value": 0,
+          "min": 0,
+          "max": 6
         }
       },
-      "abilities": {
-        "str": {
-          "value": 5
-        },
-        "dex": {
-          "value": 5
-        },
-        "int": {
-          "value": 5
-        },
-        "wil": {
-          "value": 10
-        }
+      "details": {
+        "alias": "",
+        "professione": ""
+      },
+      "inventory": {
+        "value": ""
       }
     },
     "npc": {
@@ -101,7 +62,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "feature", "spell", "weapon"],
     "templates": {
       "base": {
         "description": ""
@@ -110,8 +71,7 @@
     "item": {
       "templates": ["base"],
       "quantity": 1,
-      "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+      "weight": 0
     },
     "feature": {
       "templates": ["base"]
@@ -119,6 +79,11 @@
     "spell": {
       "templates": ["base"],
       "spellLevel": 1
+    },
+    "weapon": {
+      "templates": ["base"],
+      "damage": "",
+      "range": ""
     }
   }
 }
