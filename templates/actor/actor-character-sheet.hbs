@@ -52,17 +52,6 @@
               <div class="vitals-column">
 
                 <div class="skills-list grid"> 
-                  <div class="track cursed-track">
-                     <div class="flexrow flex-between">
-                         <label>{{localize "SPN_SYSTEM.Tracks.Cursed"}}</label>
-                         <span>{{localize "SPN_SYSTEM.Tracks.Corruzione"}}</span>
-                     </div>
-                     <div class="resource-content flexrow flex-center">
-                        {{!-- Simple Value input for now, ideally dots --}}
-                        <input type="number" name="system.tracks.dadi_maledetti.value" value="{{system.tracks.dadi_maledetti.value}}" data-dtype="Number"/> 
-                        <span>/ {{system.tracks.dadi_maledetti.max}}</span>
-                     </div>
-                  </div>
 
                   <div class="track health-track">
                      <div class="flexrow flex-between">
@@ -87,6 +76,19 @@
                          <input type="number" name="system.stress.max" value="{{system.stress.max}}" data-dtype="Number"/>
                      </div>
                   </div>
+
+                   <div class="track cursed-track">
+                     <div class="flexrow flex-between">
+                         <label>{{localize "SPN_SYSTEM.Tracks.Cursed"}}</label>
+                         <span>{{localize "SPN_SYSTEM.Tracks.Corruzione"}}</span>
+                     </div>
+                     <div class="resource-content flexrow flex-center">
+                        {{!-- Simple Value input for now, ideally dots --}}
+                        <input type="number" name="system.tracks.dadi_maledetti.value" value="{{system.tracks.dadi_maledetti.value}}" data-dtype="Number"/> 
+                        <span>/ {{system.tracks.dadi_maledetti.max}}</span>
+                     </div>
+                  </div>
+
                 </div>
               </div>
             </div>
