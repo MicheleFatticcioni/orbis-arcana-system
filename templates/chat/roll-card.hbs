@@ -1,0 +1,80 @@
+<div class="orbis-chat-roll">
+  <div class="roll-header">
+    <h2>{{label}}</h2>
+  </div>
+
+  <div class="roll-sections">
+    {{#if hasAttribute}}
+      <div class="roll-section attribute">
+        <h4 class="section-label">{{attributeKey}}</h4>
+        <div class="dice-row">
+          {{#each attributeDice as |die|}}
+            <img
+              src="systems/spn-system/assets/dice/red-dice-{{die.result}}.png"
+              class="die attribute-die"
+              title="{{die.result}}"
+            />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if hasSkill}}
+      <div class="roll-section skill">
+        <h4 class="section-label">{{skillLabel}}</h4>
+        <div class="dice-row">
+          {{#each skillDice as |die|}}
+            <img
+              src="systems/spn-system/assets/dice/red-dice-{{die.result}}.png"
+              class="die skill-die"
+              title="{{die.result}}"
+            />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if hasCursed}}
+      <div class="roll-section cursed">
+        <h4 class="section-label">Maledizione</h4>
+        <div class="dice-row">
+          {{#each cursedDice as |die|}}
+            <img
+              src="systems/spn-system/assets/dice/red-dice-{{die.result}}.png"
+              class="die cursed-die"
+              title="{{die.result}}"
+            />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if hasModifier}}
+      <div class="roll-section modifier">
+        <h4 class="section-label">Bonus</h4>
+        <div class="dice-row">
+          {{#each modifierDice as |die|}}
+            <img
+              src="systems/spn-system/assets/dice/red-dice-{{die.result}}.png"
+              class="die modifier-die"
+              title="{{die.result}}"
+            />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="roll-footer flexrow flex-between">
+    <div class="success-count">
+      <i class="fas fa-times"></i>
+      {{successCount}}
+    </div>
+    {{#if needsCursedCount}}
+      <div class="cursed-count">
+        <i class="fas fa-skull"></i>
+        {{cursedCount}}
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -244,54 +244,23 @@ export class SPNSystemActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onRoll(event) {
+  async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
+
+    const cursedDice = this.actor.system.tracks.dadi_maledetti.value || 0;
 
     if (dataset.img) {
       // Just showing an image/modal? No standard roll behavior described for clicking attribute box just to show value,
       // but usually it rolls that attribute.
     }
 
-    if (dataset.rollType === "skill") {
-      const skillKey = dataset.key;
-      const skill = this.actor.system.skills[skillKey];
-      const attributeKey = skill.mod;
-      const attribute = this.actor.system.attributes[attributeKey];
-      const cursedDice = this.actor.system.tracks.dadi_maledetti.value || 0;
-
-      // Formula: (Attribute + Skill) d6
-      const diceCount = attribute.value + skill.value;
-      let formula = `${diceCount}d6`;
-
-      let label = `Roll ${dataset.label} (${attributeKey} + ${skillKey})`;
-
-      // Simple roll for now.
-      // If we want to integrate cursed dice mechanically, we'd add them to the pool or roll separately.
-      // The req says: "tenendo conto dei dadi Maledetti (cliccando sul nome dell'abilità)."
-      // Let's prompt or just add them to the flavor text for manual resolution if not specified.
-      // Assuming we just roll the pool.
-
-      // If cursed dice > 0, maybe we should roll different colored dice or just note it.
-      // For this task, I'll just roll the pool.
-
-      let roll = new Roll(formula, this.actor.getRollData());
-      roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor:
-          label +
-          (cursedDice > 0 ? `<br><b>Dadi Maledetti: ${cursedDice}</b>` : ""),
-        rollMode: game.settings.get("core", "rollMode"),
-      });
-      return roll;
-    }
-
     // Handle attribute rolls if needed (just attribute value d6?)
     if (dataset.rollType === "attribute") {
       const attrKey = dataset.key;
       const attribute = this.actor.system.attributes[attrKey];
-      const formula = `${attribute.value}d6`;
+      const formula = `${attribute.value + cursedDice}d6`;
       let roll = new Roll(formula, this.actor.getRollData());
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -299,6 +268,71 @@ export class SPNSystemActorSheet extends ActorSheet {
         rollMode: game.settings.get("core", "rollMode"),
       });
       return roll;
+    }
+
+    if (dataset.rollType === "skill") {
+      const skillKey = dataset.key;
+      const skill = this.actor.system.skills[skillKey];
+      const attributeKey = skill.mod;
+      const attribute = this.actor.system.attributes[attributeKey];
+
+      const content = await renderTemplate(
+        "systems/spn-system/templates/dialog/roll-dialog.hbs",
+        {
+          label: dataset.label,
+          attributeLabel: attributeKey.toUpperCase(), // Could localize properly if needed
+          attributeValue: attribute.value,
+          skillLabel: dataset.label.toUpperCase(),
+          skillValue: skill.value,
+        },
+      );
+
+      new Dialog(
+        {
+          title: dataset.label,
+          content: content,
+          buttons: {
+            roll: {
+              label: "TIRA",
+              callback: (html) => {
+                const modifier =
+                  Number(html.find('[name="modifier"]').val()) || 0;
+
+                const diceCount =
+                  attribute.value + skill.value + modifier + cursedDice;
+                const formula = `${Math.max(0, diceCount)}d6`;
+
+                let label = `${dataset.label} Check`;
+                let flavor = `Rolling <b>${dataset.label}</b> (${attributeKey}: ${attribute.value} + ${dataset.label}: ${skill.value} + Mod: ${modifier})`;
+
+                if (cursedDice > 0) {
+                  flavor += `<br><span style="color: var(--primary-color)">Dadi Maledetti: ${cursedDice}</span>`;
+                }
+
+                let roll = new Roll(formula, this.actor.getRollData());
+                roll.toMessage({
+                  speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                  flavor: flavor,
+                  rollMode: game.settings.get("core", "rollMode"),
+                });
+              },
+            },
+          },
+          default: "roll",
+          render: (html) => {
+            // Removing standard buttons styling if custom button used in template
+            // actually using simple Dialog button config for now, let's see if we want custom inside form.
+            // The user image shows "TIRA" as a big button.
+            // To match the UI exactly, we might want to hide default buttons and use the one in template or style the default one.
+            // Let's rely on standard buttons but style them or use the click listener on the template button if we put one.
+            // My template includes a button. Let's use that one.
+          },
+        },
+        {
+          classes: ["orbis-dialog"],
+        },
+      ).render(true);
+      return;
     }
 
     if (dataset.rollType == "item") {

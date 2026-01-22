@@ -224,3 +224,200 @@ input {
   padding: 15px 8px;
   border-bottom: 0 solid var(--color-zinc-300) !important;
 }
+
+/* Dialog */
+.orbis-roll-dialog {
+  padding: 10px;
+}
+
+.orbis-roll-dialog .roll-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.orbis-roll-dialog .roll-title {
+  font-family: "Cinzel", serif;
+  color: var(--primary-color);
+  font-size: 1.5em;
+  margin-bottom: 5px;
+  border: none;
+}
+
+.orbis-roll-dialog .roll-details {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  color: #888;
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+
+.orbis-roll-dialog .roll-modifier {
+  background: #222;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.orbis-roll-dialog .roll-modifier label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.orbis-roll-dialog .modifier-controls input {
+  background: #333;
+  color: #fff;
+  border: 1px solid #444;
+  font-size: 1.5em;
+  padding: 5px;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.orbis-roll-dialog .roll-button {
+  background: #1a3c75; /* Blue button from screenshot */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.orbis-roll-dialog .roll-button:hover {
+  background: #2a5caa;
+  box-shadow: 0 0 10px #2a5caa;
+}
+
+/* Dialog Window Override for .orbis-dialog class added in JS */
+.orbis-dialog .window-content {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.orbis-dialog .dialog-buttons .dialog-button {
+  background: #1a3c75; /* Blue button from screenshot */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background 0.2s;
+  line-height: normal;
+}
+.orbis-dialog .dialog-buttons .dialog-button:hover {
+  background: #2a5caa;
+  box-shadow: 0 0 10px #2a5caa;
+}
+
+/* Chat Roll Card */
+.orbis-chat-roll {
+  font-family: "Roboto", sans-serif;
+  background: #f1f1f1;
+  color: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.orbis-chat-roll .roll-header h2 {
+  font-family: "Cinzel", serif;
+  color: var(--secondary-color);
+  text-align: center;
+  border-bottom: 2px solid var(--primary-color);
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.orbis-chat-roll .roll-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.orbis-chat-roll .section-label {
+  font-size: 0.8em;
+  color: #666;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ccc;
+}
+
+.orbis-chat-roll .dice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.orbis-chat-roll .die {
+  width: 30px;
+  height: 30px;
+  border: none;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* Dice Coloring via Filters (Base is RED) */
+
+/* Attribute: Red (Default) */
+
+/* Skill: Green */
+/* Hue Rotate from Red (~0deg) to Green (~120deg) */
+.orbis-chat-roll .skill-die {
+  filter: hue-rotate(100deg) brightness(1.2);
+}
+
+/* Cursed: Purple */
+/* Hue Rotate from Red (~0deg) to Purple (~280deg or -80deg) */
+.orbis-chat-roll .cursed-die {
+  filter: hue-rotate(290deg) brightness(0.9);
+}
+
+/* Modifier: Black */
+/* Grayscale + Darken */
+.orbis-chat-roll .modifier-die {
+  filter: grayscale(100%) brightness(0.3) contrast(200%);
+}
+
+.orbis-chat-roll .roll-footer {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 2px solid #ccc;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  justify-content: space-around;
+}
+
+.orbis-chat-roll .success-count,
+.orbis-chat-roll .cursed-count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Successes Icon (Swords/Cross) */
+.orbis-chat-roll .success-count i {
+  color: #333;
+}
+
+/* Cursed Icon (Skull) */
+.orbis-chat-roll .cursed-count {
+  color: var(--primary-color); /* Red skull if needed, or black */
+}
