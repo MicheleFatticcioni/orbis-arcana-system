@@ -553,7 +553,8 @@
   font-family: "Roboto", sans-serif;
 }
 
-.rollable:hover, .rollable:focus {
+.rollable:hover,
+.rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
@@ -562,7 +563,7 @@
 .grid,
 .grid-2col {
   display: grid;
-  grid-column: span 2/span 2;
+  grid-column: span 2 / span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 10px 0;
@@ -570,52 +571,52 @@
 }
 
 .grid-3col {
-  grid-column: span 3/span 3;
+  grid-column: span 3 / span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-4col {
-  grid-column: span 4/span 4;
+  grid-column: span 4 / span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .grid-5col {
-  grid-column: span 5/span 5;
+  grid-column: span 5 / span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-6col {
-  grid-column: span 6/span 6;
+  grid-column: span 6 / span 6;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .grid-7col {
-  grid-column: span 7/span 7;
+  grid-column: span 7 / span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-8col {
-  grid-column: span 8/span 8;
+  grid-column: span 8 / span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .grid-9col {
-  grid-column: span 9/span 9;
+  grid-column: span 9 / span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .grid-10col {
-  grid-column: span 10/span 10;
+  grid-column: span 10 / span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
 .grid-11col {
-  grid-column: span 11/span 11;
+  grid-column: span 11 / span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
 }
 
 .grid-12col {
-  grid-column: span 12/span 12;
+  grid-column: span 12 / span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
@@ -1116,14 +1117,14 @@
   background: #222;
   border: 1px solid #444;
 }
-.spn-system input[type=text],
-.spn-system input[type=number] {
+.spn-system input[type="text"],
+.spn-system input[type="number"] {
   background: var(--input-bg);
   color: var(--text-color);
   border: 1px solid var(--border-color);
 }
-.spn-system input[type=text]:focus,
-.spn-system input[type=number]:focus {
+.spn-system input[type="text"]:focus,
+.spn-system input[type="number"]:focus {
   box-shadow: 0 0 5px var(--primary-color);
   border-color: var(--primary-color);
 }
@@ -1349,4 +1350,26 @@
   /* Default Skull */
 }
 
-/*# sourceMappingURL=spn-system.css.map */
+/* Force Roll Button */
+.orbis-chat-roll .force-roll-container {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.orbis-chat-roll .force-roll-button {
+  background: #e63946;
+  color: #fff;
+  border: none;
+  font-family: "Cinzel", serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.orbis-chat-roll .force-roll-button:hover {
+  background: #b92b36;
+  box-shadow: 0 0 5px #e63946;
+}

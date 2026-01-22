@@ -89,6 +89,127 @@ Hooks.once("ready", function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
+Hooks.on("renderChatMessage", (message, html, data) => {
+  // Listen for Force Roll button click
+  html.find(".force-roll-button").click(async (ev) => {
+    ev.preventDefault();
+
+    // Get stored roll data from flags
+    const rollData = message.getFlag("spn-system", "rollData");
+    if (!rollData) return;
+
+    // Helper to separate filtered dice (kept vs reroll) works per pool
+    // We need to keep 1s (cursed) and 6s (success)
+    async function processPool(poolDice) {
+      let kept = [];
+      let rerollCount = 0;
+
+      for (let d of poolDice) {
+        if (d.result === 1 || d.result === 6) {
+          kept.push(d);
+        } else {
+          rerollCount++;
+        }
+      }
+
+      let newDice = [];
+      if (rerollCount > 0) {
+        const r = new Roll(`${rerollCount}d6`);
+        await r.evaluate();
+        newDice = r.dice[0].results;
+
+        if (game.settings.get("core", "rollMode") !== "blind") {
+          AudioHelper.play({ src: CONFIG.sounds.dice });
+        }
+      }
+
+      return [...kept, ...newDice];
+    }
+
+    // Process each pool
+    const newAttrDice = await processPool(rollData.attrDice);
+    const newSkillDice = await processPool(rollData.skillDice);
+    const newModDice = await processPool(rollData.modDice);
+    const newCursedDice = await processPool(rollData.cursedDice); // Do we reroll cursed dice? "rilanciano tutti i risultati diversi da 6 e da 1".
+    // Usually Cursed Dice are NOT rerolled in many systems or have special rules.
+    // But the prompt says "tutti i risultati diversi da 6 e da 1".
+    // If a Cursed die is 2-5, it's not 1 or 6. If it's 1 it's kept. If it's 6 it's kept.
+    // Assuming strict interpretation: reroll them too.
+
+    // Calculate new stats
+    const getStats = (results) => ({
+      success: results.filter((d) => d.result === 6).length,
+      cursed: results.filter((d) => d.result === 1).length,
+    });
+
+    const attrStats = getStats(newAttrDice);
+    const skillStats = getStats(newSkillDice);
+    const modStats = getStats(newModDice);
+    const cursedStats = getStats(newCursedDice);
+
+    const allResults = [
+      ...newAttrDice,
+      ...newSkillDice,
+      ...newModDice,
+      ...newCursedDice,
+    ];
+
+    const successCount = allResults.filter((d) => d.result === 6).length;
+    const totalCursedCount = allResults.filter((d) => d.result === 1).length;
+
+    // Prepare new card data
+    const cardData = {
+      label: rollData.label + " (Forzato)",
+      attributeKey: rollData.attributeKey,
+      attributeDice: newAttrDice,
+      attributeStats: attrStats,
+      hasAttribute: newAttrDice.length > 0,
+
+      skillLabel: rollData.skillLabel,
+      skillDice: newSkillDice,
+      skillStats: skillStats,
+      hasSkill: newSkillDice.length > 0,
+
+      cursedDice: newCursedDice,
+      cursedStats: cursedStats,
+      hasCursed: newCursedDice.length > 0,
+
+      modifierDice: newModDice,
+      modifierStats: modStats,
+      hasModifier: newModDice.length > 0,
+
+      successCount: successCount,
+      cursedCount: totalCursedCount,
+    };
+
+    const content = await renderTemplate(
+      "systems/spn-system/templates/chat/roll-card.hbs",
+      cardData,
+    );
+
+    // Create new chat message
+    ChatMessage.create({
+      user: game.user.id,
+      speaker: message.speaker,
+      content: content,
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      flags: {
+        "spn-system": {
+          rollData: {
+            attrDice: newAttrDice,
+            skillDice: newSkillDice,
+            modDice: newModDice,
+            cursedDice: newCursedDice,
+            label: rollData.label + " (Forzato)",
+            attributeKey: rollData.attributeKey,
+            skillLabel: rollData.skillLabel,
+          },
+        },
+      },
+    });
+  });
+});
+
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
@@ -105,7 +226,7 @@ async function createItemMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!data.uuid.includes("Actor.") && !data.uuid.includes("Token.")) {
     return ui.notifications.warn(
-      "You can only create macro buttons for owned Items"
+      "You can only create macro buttons for owned Items",
     );
   }
   // If it is, retrieve it based on the uuid.
@@ -114,7 +235,7 @@ async function createItemMacro(data, slot) {
   // Create the macro command using the uuid.
   const command = `game.spnsystem.rollItemMacro("${data.uuid}");`;
   let macro = game.macros.find(
-    (m) => m.name === item.name && m.command === command
+    (m) => m.name === item.name && m.command === command,
   );
   if (!macro) {
     macro = await Macro.create({
@@ -146,7 +267,7 @@ function rollItemMacro(itemUuid) {
     if (!item || !item.parent) {
       const itemName = item?.name ?? itemUuid;
       return ui.notifications.warn(
-        `Could not find item ${itemName}. You may need to delete and recreate this macro.`
+        `Could not find item ${itemName}. You may need to delete and recreate this macro.`,
       );
     }
 

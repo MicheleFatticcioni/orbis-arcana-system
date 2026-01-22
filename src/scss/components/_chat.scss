@@ -122,3 +122,27 @@
 .orbis-chat-roll .fa-skull {
   color: #333; /* Default Skull */
 }
+
+/* Force Roll Button */
+.orbis-chat-roll .force-roll-container {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.orbis-chat-roll .force-roll-button {
+  background: #e63946;
+  color: #fff;
+  border: none;
+  font-family: "Cinzel", serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.orbis-chat-roll .force-roll-button:hover {
+  background: #b92b36;
+  box-shadow: 0 0 5px #e63946;
+}

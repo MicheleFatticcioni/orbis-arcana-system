@@ -76,13 +76,16 @@
 
   <div class="divider"></div>
 
-  <div class="roll-footer flexrow flex-center">
-    <div class="total-stats">
+  <div class="roll-footer flexcol flex-center">
+    <div class="total-stats flexrow flex-between">
       <i class="fas fa-times"></i>
       {{successCount}}
       |
       <i class="fas fa-skull"></i>
       {{cursedCount}}
+    </div>
+    <div class="force-roll-container">
+      <button class="force-roll-button" data-action="force-roll">FORZA!</button>
     </div>
   </div>
 </div>

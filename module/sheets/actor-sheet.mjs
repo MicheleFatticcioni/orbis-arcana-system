@@ -396,11 +396,27 @@ export class SPNSystemActorSheet extends ActorSheet {
                     AudioHelper.play({ src: CONFIG.sounds.dice });
                   }
 
+                  // Store detailed dice info for reroll logic
+                  const rollFlags = {
+                    attrDice: attrResults,
+                    skillDice: skillResults,
+                    modDice: modResults,
+                    cursedDice: cursedResults,
+                    label: dataset.label,
+                    attributeKey: attributeKey,
+                    skillLabel: dataset.label,
+                  };
+
                   ChatMessage.create({
                     user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                     content: html,
                     type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+                    flags: {
+                      "spn-system": {
+                        rollData: rollFlags,
+                      },
+                    },
                   });
                 })();
               },
