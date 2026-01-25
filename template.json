@@ -34,11 +34,11 @@
         "movimento": { "value": 0, "mod": "agilita" },
         "empatia": { "value": 0, "mod": "spirito" },
         "intuizione": { "value": 0, "mod": "spirito" },
-        "investigazione": { "value": 0, "mod": "spirito" },
         "rituali": { "value": 0, "mod": "spirito" },
+        "percezione": { "value": 0, "mod": "spirito" },
         "medicina": { "value": 0, "mod": "ingegno" },
         "ingegneria": { "value": 0, "mod": "ingegno" },
-        "percezione": { "value": 0, "mod": "ingegno" },
+        "investigazione": { "value": 0, "mod": "ingegno" },
         "occultismo": { "value": 0, "mod": "ingegno" }
       },
       "tracks": {
@@ -74,7 +74,8 @@
       "weight": 0
     },
     "feature": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "level": 1
     },
     "spell": {
       "templates": ["base"],

@@ -17,8 +17,7 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="features">Caratteristiche</a>
     <a class="item" data-tab="items">Equipaggiamento</a>
-    <a class="item" data-tab="spells">Incantesimi</a>
-    <a class="item" data-tab="effects">Effetti</a>
+    <a class="item" data-tab="talents">Doti</a>
     <a class="item" data-tab="description">Descrizione</a>
   </nav>
   
@@ -157,13 +156,8 @@
           {{> "systems/spn-system/templates/actor/parts/actor-items.hbs"}}
       </div>
 
-      {{!-- Spells Tab --}}
-      <div class="tab spells" data-group="primary" data-tab="spells">
-        {{> "systems/spn-system/templates/actor/parts/actor-spells.hbs"}}
-      </div>
-
       {{!-- Effects Tab --}}
-      <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      <div class="tab effects flexcol" data-group="primary" data-tab="talents">
         {{> "systems/spn-system/templates/actor/parts/actor-effects.hbs"}}
       </div>
 
