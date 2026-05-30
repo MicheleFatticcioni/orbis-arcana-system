@@ -1,83 +1,85 @@
-// Section Header
+// ─── Intestazione sezione ────────────────────────────
 .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
   align-items: center;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--surface-raised, #ede0c4);
   border: $border-groove;
-  font-weight: bold;
+  font-weight: 700;
+  font-family: 'Cinzel', serif;
+
   > * {
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
+    color: var(--text-color, #2c1a0e);
   }
+
   .item-name {
-    font-weight: bold;
+    font-weight: 700;
     padding-left: 5px;
     text-align: left;
     display: flex;
-    // font-size: 16px;
   }
 }
 
-// -----------------------------------------
-// Items Lists
-// -----------------------------------------
-
+// ─── Lista oggetti ────────────────────────────────────
 .items-list {
   list-style: none;
   margin: 0;
   padding: 0;
   overflow-y: auto;
   scrollbar-width: thin;
-  color: $c-tan;
+  color: var(--text-color, #2c1a0e);
 
-  // Child lists
   .item-list {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  // Item Name
   .item-name {
     flex: 2;
     margin: 0;
     overflow: hidden;
-    font-size: 13px;
+    font-size: 14px;
     text-align: left;
     align-items: center;
     display: flex;
-    h3,
-    h4 {
+    color: var(--text-color, #2c1a0e);
+
+    h3, h4 {
       margin: 0;
       white-space: nowrap;
       overflow-x: hidden;
+      color: var(--text-color, #2c1a0e);
     }
   }
 
-  // Control Buttons
   .item-controls {
     display: flex;
     flex: 0 0 100px;
     justify-content: flex-end;
+
     a {
       font-size: 12px;
       text-align: center;
       margin: 0 6px;
+      color: var(--text-muted, #7a5c48);
+
+      &:hover { color: var(--primary-color, #8b3a2a); }
     }
   }
 
-  // Individual Item
   .item {
     align-items: center;
-    padding: 0 2px; // to align with the header border
-    border-bottom: 1px solid $c-faint;
-    &:last-child {
-      border-bottom: none;
-    }
+    padding: 0 2px;
+    border-bottom: 1px solid var(--border-light, #e0ccaa);
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: var(--surface-raised, #ede0c4); }
+
     .item-name {
-      color: #fff;
       .item-image {
         flex: 0 0 30px;
         height: 30px;
@@ -90,94 +92,116 @@
 
   .item-prop {
     text-align: center;
-    border-left: 1px solid #c9c7b8;
-    border-right: 1px solid #c9c7b8;
+    border-left: 1px solid var(--border-light, #e0ccaa);
+    border-right: 1px solid var(--border-light, #e0ccaa);
     font-size: 12px;
+    color: var(--text-color, #2c1a0e);
   }
 
-  // Section Header
   .items-header {
     height: 28px;
     margin: 2px 0;
     padding: 0;
     align-items: center;
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--surface-raised, #ede0c4);
     border: $border-groove;
-    font-weight: bold;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+
     > * {
       font-size: 12px;
       text-align: center;
+      color: var(--text-color, #2c1a0e);
     }
+
     .item-name {
       padding-left: 5px;
       text-align: left;
-      // font-size: 16px;
     }
   }
 }
 
-// Example style for SPNSystem (can be removed if not needed).
 .item-formula {
   flex: 0 0 200px;
   padding: 0 8px;
 }
 
-// -----------------------------------------
-// Doti (Features/Talents) List
-// -----------------------------------------
+.light-label {
+  font-size: 10px;
+  color: var(--text-muted, #7a5c48);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  display: block;
+}
 
+// ─── Lista Doti ───────────────────────────────────────
 .doti-list {
   .doti-level-header {
     flex: 0 0 70px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 12px;
+    font-family: 'Cinzel', serif;
+    color: var(--text-muted, #7a5c48);
   }
 
   .doti-level {
     flex: 0 0 70px;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: $c-tan;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    color: var(--primary-color, #8b3a2a);
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 3px;
     padding: 2px 6px;
     transition: background 0.15s;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: var(--surface-raised, #ede0c4);
     }
   }
 }
 
-// -----------------------------------------
-// Feature (Dote) Item Sheet
-// -----------------------------------------
-
+// ─── Scheda Dote (item-feature-sheet) ─────────────────
 .feature-sheet {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background: var(--secondary-color, #f2e8cc);
 
   .feature-header {
     gap: 10px;
+
+    .profile-img {
+      border: 1px solid var(--border-color, #c9a87c);
+      border-radius: 2px;
+    }
   }
 
   .feature-type-row {
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-top: 6px;
+    margin-top: 8px;
 
     select {
       flex: 1;
-      min-width: 100px;
-      background: rgba(0, 0, 0, 0.3);
-      color: $c-tan;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-      padding: 2px 6px;
+      min-width: 120px;
+      background: var(--input-bg, #faf3e0);
+      color: var(--text-color, #2c1a0e);
+      border: 1px solid var(--border-color, #c9a87c);
+      border-radius: 2px;
+      padding: 3px 8px;
+      font-family: 'Crimson Text', serif;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color, #8b3a2a);
+      }
     }
 
     .light-label {
@@ -188,20 +212,20 @@
   .feature-body {
     flex: 1;
     overflow-y: auto;
-    padding: 8px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
 
   .section-label {
     display: block;
-    font-size: 11px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: $c-tan;
-    opacity: 0.7;
-    margin-bottom: 4px;
+    letter-spacing: 1.2px;
+    color: var(--text-muted, #7a5c48);
+    margin-bottom: 5px;
   }
 
   .feature-description {
@@ -215,15 +239,16 @@
   }
 
   .feature-level-block {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-light, #e0ccaa);
+    border-radius: 2px;
+    padding: 9px 10px;
+    background: var(--surface, #faf3e0);
     transition: border-color 0.2s;
 
     &.active-level {
-      border-color: rgba(200, 170, 100, 0.5);
-      background: rgba(200, 170, 100, 0.06);
+      border-color: var(--border-dark, #a0795a);
+      background: var(--secondary-color, #f2e8cc);
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.06);
     }
 
     .level-header {
@@ -234,102 +259,114 @@
     }
 
     .level-badge {
-      font-size: 12px;
-      font-weight: bold;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: $c-tan;
+      letter-spacing: 0.8px;
+      color: var(--text-color, #2c1a0e);
     }
 
     .level-modifier {
-      font-size: 12px;
-      color: #7ec8a0;
+      font-family: 'Crimson Text', serif;
+      font-size: 13px;
       font-style: italic;
-      background: rgba(126, 200, 160, 0.1);
-      border-radius: 4px;
-      padding: 1px 6px;
+      color: #2e6b30;
+      background: rgba(46, 107, 48, 0.08);
+      border: 1px solid rgba(46, 107, 48, 0.25);
+      border-radius: 3px;
+      padding: 1px 7px;
     }
 
     .level-fields {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
 
       textarea {
         width: 100%;
-        background: rgba(0, 0, 0, 0.25);
-        color: $c-tan;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 4px;
-        padding: 6px;
-        font-size: 13px;
+        background: var(--input-bg, #faf3e0);
+        color: var(--text-color, #2c1a0e);
+        border: 1px solid var(--border-light, #e0ccaa);
+        border-radius: 2px;
+        padding: 6px 8px;
+        font-family: 'Crimson Text', serif;
+        font-size: 14px;
         resize: vertical;
         box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color, #8b3a2a);
+        }
+
+        &::placeholder { color: var(--text-faded, #b09a8a); }
       }
 
-      input[type="text"] {
-        background: rgba(0, 0, 0, 0.25);
-        color: #7ec8a0;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 4px;
+      input[type='text'] {
+        background: var(--input-bg, #faf3e0);
+        color: #2e6b30;
+        border: 1px solid var(--border-light, #e0ccaa);
+        border-radius: 2px;
         padding: 4px 8px;
-        font-size: 12px;
+        font-family: 'Crimson Text', serif;
+        font-size: 13px;
         font-style: italic;
         width: 100%;
         box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: #2e6b30;
+        }
+
+        &::placeholder { color: #9ab89c; }
       }
     }
   }
 }
 
-// -----------------------------------------
-// Dote Chat Card
-// -----------------------------------------
-
+// ─── Card Dote in chat ─────────────────────────────────
 .dote-chat-card {
   padding: 4px 2px;
 
   .dote-chat-title {
-    font-size: 15px;
-    font-weight: bold;
-    margin: 0 0 4px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 5px;
+    border-bottom: 1px solid #c9a87c;
     padding-bottom: 4px;
+    color: #2c1a0e;
   }
 
   .dote-chat-meta {
     display: flex;
     gap: 10px;
-    font-size: 11px;
-    opacity: 0.7;
-    margin-bottom: 6px;
+    font-size: 10px;
+    font-family: 'Cinzel', serif;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: #7a5c48;
+    margin-bottom: 7px;
   }
 
   .dote-chat-desc {
     font-style: italic;
-    font-size: 12px;
-    margin-bottom: 4px;
-    opacity: 0.8;
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #5c3d2e;
   }
 
   .dote-chat-level-desc {
-    font-size: 13px;
-    margin-bottom: 4px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #2c1a0e;
   }
 
   .dote-chat-modifier {
-    font-size: 12px;
-    color: #7ec8a0;
+    font-size: 13px;
+    color: #2e6b30;
+    font-style: italic;
   }
-}
-
-.light-label {
-  font-size: 10px;
-  color: var(--color-zinc-500);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 2px;
-  display: block;
 }

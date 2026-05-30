@@ -1,185 +1,253 @@
-/* Orbis Arcana Specific Styles */
+/* Orbis Arcana — Tema Diario Antico */
 
 /* Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap");
 
-/* Variables Override or Addition */
+/* ─── Variabili CSS ─────────────────────────────────── */
 & {
-  --primary-color: #e63946; /* Red accent */
-  --secondary-color: #1a1a1a; /* Dark background */
-  --text-color: #f1f1f1;
-  --border-color: #333;
-  --input-bg: #2a2a2a;
-  --color-red-400: lab(63.7053% 60.745 31.3109);
-  --color-red-500: lab(55.4814% 75.0732 48.8528);
-  --color-red-800: lab(33.7174% 55.8993 41.0293);
-  --color-red-900: lab(28.5139% 44.5539 29.0463);
-  --color-amber-600: lab(60.3514% 40.5624 87.1228);
-  --color-amber-700: lab(47.2709% 42.9082 69.2966);
-  --color-green-800: lab(37.4616% -36.7971 22.9692);
-  --color-green-900: lab(30.797% -29.6927 17.382);
-  --color-blue-400: lab(65.0361% -1.42065 -56.9802);
-  --color-blue-800: lab(30.2514% 27.7853 -70.2699);
-  --color-blue-900: lab(26.1542% 15.7545 -51.5504);
-  --color-purple-300: lab(78.3298% 26.2195 -34.9499);
-  --color-purple-400: lab(63.6946% 47.6127 -59.2066);
-  --color-purple-500: lab(52.0183% 66.11 -78.2316);
-  --color-purple-800: lab(30.6017% 56.7637 -64.4751);
-  --color-purple-900: lab(24.9401% 45.2703 -51.2728);
-  --color-zinc-50: lab(98.26% 0 0);
-  --color-zinc-300: lab(84.9837% 0.601262 -2.17986);
-  --color-zinc-400: lab(65.6464% 1.53497 -5.42429);
-  --color-zinc-500: lab(47.8878% 1.65477 -5.77283);
-  --color-zinc-600: lab(35.1166% 1.78212 -6.1173);
-  --color-zinc-700: lab(26.8019% 1.35387 -4.68303);
-  --color-zinc-800: lab(15.7305% 0.613764 -2.16959);
-  --color-zinc-900: lab(8.30603% 0.618205 -2.16572);
-  --color-zinc-950: lab(2.51107% 0.242703 -0.886115);
+  --primary-color:   #8b3a2a;
+  --primary-hover:   #a84832;
+  --secondary-color: #f2e8cc;
+  --surface:         #faf3e0;
+  --surface-raised:  #ede0c4;
+  --text-color:      #2c1a0e;
+  --text-muted:      #7a5c48;
+  --text-faded:      #b09a8a;
+  --border-color:    #c9a87c;
+  --border-light:    #e0ccaa;
+  --border-dark:     #a0795a;
+  --input-bg:        #faf3e0;
+  --gold:            #b8860b;
+
+  /* Alias colori Foundry — sovrascrittura per tema chiaro */
+  --color-zinc-500: #7a5c48;
+  --color-zinc-300: #c9a87c;
 }
 
-/* Sheet Sizing and Base */
+/* ─── Base scheda ───────────────────────────────────── */
 &.sheet.actor {
   min-width: 800px;
   min-height: 900px;
 }
 
 .window-content {
-  background: var(--secondary-color);
+  background-color: var(--secondary-color);
   color: var(--text-color);
-  font-family: "Roboto", sans-serif;
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 15px;
 }
 
-/* Header */
+/* ─── Intestazione ──────────────────────────────────── */
 .sheet-header {
-  padding: 10px;
-  background: #111;
+  padding: 12px 14px;
+  background: var(--surface-raised);
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 0;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   margin: 0;
   border: none;
+  font-family: 'Cinzel', serif;
+  color: var(--text-color);
 }
 
+.charname input,
+.profession input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-family: 'Cinzel', serif;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: var(--primary-color);
+  }
+}
+
+/* ─── Tab di navigazione ────────────────────────────── */
+.sheet-tabs {
+  background: var(--surface-raised);
+  border-bottom: 2px solid var(--border-color);
+  padding: 0 6px;
+  display: flex;
+
+  .item {
+    color: var(--text-muted);
+    padding: 6px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78em;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+
+    &:hover {
+      color: var(--text-color);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    &.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+      background: var(--secondary-color);
+    }
+  }
+}
+
+/* ─── Intestazioni di sezione ───────────────────────── */
 .section-header {
-  font-family: "Cinzel", serif;
+  font-family: 'Cinzel', serif;
   color: var(--primary-color);
-  border-bottom: 1px solid var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 10px;
-  padding-bottom: 2px;
-  font-size: 1.2em;
+  padding-bottom: 3px;
+  font-size: 0.95em;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
 }
 
-/* Attributes Row */
+/* ─── Attributi ─────────────────────────────────────── */
 .attributes-row {
   padding: 10px;
   gap: 10px;
 
   .attribute-card {
     border: 1px solid var(--border-color);
-    padding: 10px;
-    border-radius: 4px;
-    background: #222;
+    padding: 10px 8px;
+    border-radius: 2px;
+    background: var(--surface);
     text-align: center;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.08);
 
     .attribute-label {
-      font-family: "Cinzel", serif;
-      font-weight: bold;
-      color: #ccc;
-      font-size: 0.9em;
-      margin-bottom: 5px;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.72em;
+      margin-bottom: 4px;
       text-transform: uppercase;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--primary-color);
+      }
     }
 
     .attribute-value input {
       background: transparent;
       border: none;
-      color: #fff;
+      color: var(--text-color);
       font-size: 2.5em;
-      font-weight: bold;
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
       text-align: center;
       width: 100%;
     }
   }
 }
 
-/* Main Content */
-.sheet-main {
-  padding: 10px;
-  gap: 20px;
-}
-
-/* Skills */
+/* ─── Abilità ───────────────────────────────────────── */
 .skill-group {
-  margin-bottom: 15px;
-  border-left: 2px solid #333;
+  margin-bottom: 12px;
+  border-left: 2px solid var(--border-light);
   padding-left: 10px;
 
   .skill-group-header {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 5px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .skill-item {
-    padding: 2px 0;
+    padding: 3px 0;
     align-items: center;
+    border-bottom: 1px dotted var(--border-light);
+
+    &:last-child { border-bottom: none; }
 
     .skill-name {
-      font-weight: bold;
+      font-weight: 600;
+      color: var(--text-color);
       cursor: pointer;
+
       &:hover {
         color: var(--primary-color);
-        text-shadow: 0 0 5px var(--primary-color);
+        text-shadow: none;
       }
     }
 
     .skill-input {
       background: transparent !important;
       border: none !important;
-      border-bottom: 1px solid #444 !important;
-      color: #fff !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      color: var(--text-color) !important;
       text-align: right;
       width: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95em;
     }
   }
 }
 
-/* Vitals */
+/* ─── Stato Vitale ──────────────────────────────────── */
 .vitals-column {
-  border-left: 1px solid #333;
+  border-left: 1px solid var(--border-light);
   padding-left: 20px;
 
   .track {
-    background: #1e1e1e;
+    background: var(--surface);
     padding: 10px;
     margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #333;
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 
-    &.cursed-track span {
-      color: #888;
+    label {
+      color: var(--text-color);
+      font-family: 'Cinzel', serif;
+      font-size: 0.82em;
+      font-weight: 700;
     }
-    &.health-track span {
-      color: #888;
+
+    span {
+      color: var(--text-muted);
+      font-size: 0.82em;
     }
-    &.stress-track span {
-      color: #888;
+
+    .resource-content {
+      gap: 4px;
+      align-items: center;
+
+      input[type='number'] {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-color);
+        font-family: 'Cinzel', serif;
+        font-size: 1.4em;
+        text-align: center;
+        width: 40px;
+      }
+
+      span {
+        font-size: 1em;
+        color: var(--text-muted);
+      }
     }
   }
 }
 
-/* Weapons */
+/* ─── Armi ──────────────────────────────────────────── */
 .weapons-section {
   padding: 10px;
 
-  .weapons-list {
-    width: 100%;
-  }
+  .weapons-list { width: 100%; }
 
   .weapons-list-header,
   .weapon-row {
@@ -189,21 +257,23 @@ h3 {
   }
 
   .weapons-list-header {
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--border-dark);
     padding-bottom: 4px;
     margin-bottom: 4px;
-    font-size: 0.75em;
+    font-size: 0.7em;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #888;
-    font-weight: bold;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
   }
 
   .weapon-row {
     padding: 4px 2px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border-light);
+
     &:last-child { border-bottom: none; }
-    &:hover { background: #2a2a2a; }
+    &:hover { background: var(--surface-raised); }
   }
 
   .weapon-col {
@@ -216,20 +286,21 @@ h3 {
     }
     &.weapon-col-name {
       flex: 2 1 0;
-      font-weight: bold;
-      color: #f1f1f1;
+      font-weight: 600;
+      color: var(--text-color);
     }
     &.weapon-col-type {
       flex: 1 1 0;
       font-size: 0.85em;
-      color: #aaa;
+      color: var(--text-muted);
       text-align: center;
     }
     &.weapon-col-damage {
       flex: 0 0 50px;
       text-align: center;
+      font-family: 'Cinzel', serif;
       font-size: 0.9em;
-      color: #ccc;
+      color: var(--text-color);
     }
     &.weapon-col-condition {
       flex: 0 0 90px;
@@ -240,8 +311,9 @@ h3 {
       display: flex;
       justify-content: flex-end;
       gap: 6px;
+
       a {
-        color: #888;
+        color: var(--text-muted);
         font-size: 12px;
         &:hover { color: var(--primary-color); }
       }
@@ -249,33 +321,32 @@ h3 {
   }
 
   .condition-label {
-    font-size: 0.78em;
-    font-weight: bold;
+    font-size: 0.75em;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 1px 5px;
     border-radius: 3px;
 
-    &.condition-excellent { color: #4caf50; border: 1px solid #4caf50; }
-    &.condition-good      { color: #8bc34a; border: 1px solid #8bc34a; }
-    &.condition-acceptable{ color: #ffc107; border: 1px solid #ffc107; }
-    &.condition-poor      { color: #ff7043; border: 1px solid #ff7043; }
+    &.condition-excellent { color: #2e6b30; border: 1px solid #2e6b30; }
+    &.condition-good      { color: #4a6a1a; border: 1px solid #4a6a1a; }
+    &.condition-acceptable{ color: #7a5a08; border: 1px solid #7a5a08; }
+    &.condition-poor      { color: #7a3418; border: 1px solid #7a3418; }
     &.condition-bad       { color: var(--primary-color); border: 1px solid var(--primary-color); }
   }
 
   .item-create {
-    color: #888;
+    color: var(--text-muted);
     font-size: 12px;
     &:hover { color: var(--primary-color); }
   }
 }
 
+/* ─── Inventario ────────────────────────────────────── */
 .inventory-section {
   padding: 10px;
 
-  .gear-list {
-    width: 100%;
-  }
+  .gear-list { width: 100%; }
 
   .gear-list-header,
   .gear-row {
@@ -285,21 +356,23 @@ h3 {
   }
 
   .gear-list-header {
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--border-dark);
     padding-bottom: 4px;
     margin-bottom: 4px;
-    font-size: 0.75em;
+    font-size: 0.7em;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #888;
-    font-weight: bold;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
   }
 
   .gear-row {
     padding: 4px 2px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border-light);
+
     &:last-child { border-bottom: none; }
-    &:hover { background: #2a2a2a; }
+    &:hover { background: var(--surface-raised); }
   }
 
   .gear-col {
@@ -313,27 +386,29 @@ h3 {
     }
     &.gear-col-name {
       flex: 0 0 140px;
-      font-weight: bold;
-      color: #f1f1f1;
+      font-weight: 600;
+      color: var(--text-color);
     }
     &.gear-col-desc {
       flex: 1 1 0;
       font-size: 0.85em;
-      color: #aaa;
+      color: var(--text-muted);
     }
     &.gear-col-qty {
       flex: 0 0 40px;
       text-align: center;
+      font-family: 'Cinzel', serif;
       font-size: 0.9em;
-      color: #ccc;
+      color: var(--text-color);
     }
     &.gear-col-controls {
       flex: 0 0 60px;
       display: flex;
       justify-content: flex-end;
       gap: 6px;
+
       a {
-        color: #888;
+        color: var(--text-muted);
         font-size: 12px;
         &:hover { color: var(--primary-color); }
       }
@@ -341,138 +416,159 @@ h3 {
   }
 
   .item-create {
-    color: #888;
+    color: var(--text-muted);
     font-size: 12px;
     &:hover { color: var(--primary-color); }
   }
 }
 
-/* Editor Overrides */
+/* ─── Editor di testo ───────────────────────────────── */
 .editor-content {
-  background: #f1f1f1;
-  color: #000;
+  background: var(--surface);
+  color: var(--text-color);
   min-height: 100px;
-  padding: 5px;
+  padding: 6px;
   border-radius: 2px;
 }
+
 .prosemirror {
   color: var(--text-color);
 }
+
 .editor {
-  background: #222;
-  border: 1px solid #444;
+  background: var(--surface);
+  border: 1px solid var(--border-color);
 }
 
-input[type="text"],
-input[type="number"] {
+/* ─── Input globali ─────────────────────────────────── */
+input[type='text'],
+input[type='number'] {
   background: var(--input-bg);
   color: var(--text-color);
   border: 1px solid var(--border-color);
+
   &:focus {
-    box-shadow: 0 0 5px var(--primary-color);
+    box-shadow: 0 0 4px rgba(139, 58, 42, 0.25);
     border-color: var(--primary-color);
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--text-faded);
   }
 }
 
 input {
   padding: 15px 8px;
-  border-bottom: 0 solid var(--color-zinc-300) !important;
+  border-bottom: 0 solid var(--border-light) !important;
 }
 
-/* Dialog */
+/* ─── Dialog di tiro ────────────────────────────────── */
 .orbis-roll-dialog {
   padding: 10px;
-}
-
-.orbis-roll-dialog .roll-header {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.orbis-roll-dialog .roll-title {
-  font-family: "Cinzel", serif;
-  color: var(--primary-color);
-  font-size: 1.5em;
-  margin-bottom: 5px;
-  border: none;
-}
-
-.orbis-roll-dialog .roll-details {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  color: #888;
-  font-size: 0.9em;
-  text-transform: uppercase;
-}
-
-.orbis-roll-dialog .roll-modifier {
-  background: #222;
-  padding: 15px;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.orbis-roll-dialog .roll-modifier label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #ccc;
-}
-
-.orbis-roll-dialog .modifier-controls input {
-  background: #333;
-  color: #fff;
-  border: 1px solid #444;
-  font-size: 1.5em;
-  padding: 5px;
-  width: 80px;
-  text-align: center;
-  border-radius: 4px;
-}
-
-.orbis-roll-dialog .roll-button {
-  background: #1a3c75; /* Blue button from screenshot */
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  font-weight: bold;
-  width: 100%;
-  cursor: pointer;
-  text-transform: uppercase;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.orbis-roll-dialog .roll-button:hover {
-  background: #2a5caa;
-  box-shadow: 0 0 10px #2a5caa;
-}
-
-/* Dialog Window Override for .orbis-dialog class added in JS */
-.orbis-dialog .window-content {
   background: var(--secondary-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
+
+  .roll-header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .roll-title {
+    font-family: 'Cinzel', serif;
+    color: var(--primary-color);
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    border: none;
+  }
+
+  .roll-details {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    color: var(--text-muted);
+    font-size: 0.9em;
+    text-transform: uppercase;
+  }
+
+  .roll-modifier {
+    background: var(--surface);
+    padding: 15px;
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    text-align: center;
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--text-color);
+      font-family: 'Cinzel', serif;
+      font-size: 0.9em;
+    }
+  }
+
+  .modifier-controls input {
+    background: var(--surface);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-size: 1.5em;
+    padding: 5px;
+    width: 80px;
+    text-align: center;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+  }
+
+  .roll-button {
+    background: var(--primary-color);
+    color: #faf3e0;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    font-weight: 700;
+    width: 100%;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1.5px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 2px 8px rgba(139, 58, 42, 0.3);
+    }
+  }
 }
-.orbis-dialog .dialog-buttons .dialog-button {
-  background: #1a3c75; /* Blue button from screenshot */
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  font-weight: bold;
-  width: 100%;
-  cursor: pointer;
-  text-transform: uppercase;
-  border-radius: 4px;
-  transition: background 0.2s;
-  line-height: normal;
-}
-.orbis-dialog .dialog-buttons .dialog-button:hover {
-  background: #2a5caa;
-  box-shadow: 0 0 10px #2a5caa;
+
+/* ─── Finestra Dialog ───────────────────────────────── */
+.orbis-dialog {
+  .window-content {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+
+  .dialog-buttons .dialog-button {
+    background: var(--primary-color);
+    color: #faf3e0;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    font-weight: 700;
+    width: 100%;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1.5px;
+    transition: background 0.2s;
+    line-height: normal;
+
+    &:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 2px 8px rgba(139, 58, 42, 0.3);
+    }
+  }
 }

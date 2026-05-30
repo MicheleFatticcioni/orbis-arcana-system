@@ -1,7 +1,29 @@
 $c-white: #fff;
 $c-black: #000;
 
-$c-dark: #191813;
-$c-faint: #c9c7b8;
-$c-beige: #b5b3a4;
-$c-tan: #444;
+// Parchment — pagine ingiallite
+$c-parchment-light: #faf3e0;
+$c-parchment:       #f2e8cc;
+$c-parchment-mid:   #e8d5a3;
+$c-parchment-deep:  #d9c49a;
+
+// Inchiostro — testi e bordi
+$c-ink:         #2c1a0e;
+$c-ink-mid:     #5c3d2e;
+$c-ink-light:   #8b6c5c;
+$c-ink-faded:   #b09a8a;
+
+// Bordi pergamena
+$c-border-main:  #c9a87c;
+$c-border-light: #e0ccaa;
+$c-border-dark:  #a0795a;
+
+// Accento — sigillo di cera
+$c-seal:       #8b3a2a;
+$c-seal-hover: #a84832;
+
+// Alias per compatibilità con il codice esistente
+$c-dark:  $c-ink;
+$c-faint: $c-border-main;
+$c-beige: $c-ink-faded;
+$c-tan:   $c-ink-mid;

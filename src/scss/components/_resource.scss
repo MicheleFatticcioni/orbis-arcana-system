@@ -2,7 +2,7 @@
 
 .resource-label {
   font-weight: bold;
-  color: $c-faint;
+  color: $c-ink-mid;
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -13,20 +13,21 @@
   input[type='text'],
   input[type='number'],
   select {
-    background-color: rgba($c-white, 0.1);
-    border: 1px solid $c-beige;
-    color: $c-faint;
+    background-color: $c-parchment-light;
+    border: 1px solid $c-border-main;
+    color: $c-ink;
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: 2px;
 
     &:focus {
-      background-color: rgba($c-white, 0.15);
-      border-color: $c-white;
+      background-color: $c-parchment-light;
+      border-color: $c-seal;
       outline: none;
+      box-shadow: 0 0 4px rgba(139, 58, 42, 0.2);
     }
 
     &::placeholder {
-      color: rgba($c-faint, 0.5);
+      color: $c-ink-faded;
     }
   }
 
@@ -46,7 +47,7 @@
 .condition-dot {
   width: 1.5rem;
   height: 1.5rem;
-  border: 2px solid $c-faint;
+  border: 2px solid $c-border-main;
   border-radius: 50%;
   background-color: transparent;
   transition: background-color 0.2s ease;
@@ -57,7 +58,8 @@
   }
 
   &.filled {
-    background-color: $c-faint;
+    background-color: $c-seal;
+    border-color: $c-seal;
   }
 }
 

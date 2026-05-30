@@ -1,34 +1,36 @@
-/* Chat Roll Card */
+/* Orbis Arcana — Chat Roll Card (tema diario) */
+
 .orbis-chat-roll {
-  font-family: "Roboto", sans-serif;
-  background: #f1f1f1;
-  color: #1a1a1a;
-  border: 2px solid #333;
-  border-radius: 5px;
+  font-family: 'Crimson Text', Georgia, serif;
+  background: #faf3e0;
+  color: #2c1a0e;
+  border: 1px solid #c9a87c;
+  border-radius: 3px;
   padding: 10px;
   margin-bottom: 5px;
 }
 
 .orbis-chat-roll .orbis-divider,
 .orbis-chat-roll .divider {
-  border-bottom: 2px solid #ccc;
+  border-bottom: 1px solid #c9a87c;
   margin: 10px 0;
   width: 100%;
 }
 
 .orbis-chat-roll .roll-header h2 {
-  font-family: "Cinzel", serif;
-  color: #1a1a1a; /* Using Hex for safety if var not available globally */
+  font-family: 'Cinzel', serif;
+  color: #2c1a0e;
   text-align: center;
-  border-bottom: 2px solid #e63946;
+  border-bottom: 2px solid #8b3a2a;
   margin-bottom: 15px;
   padding-bottom: 5px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .orbis-chat-roll .roll-sections {
   display: flex;
-  flex-direction: column; /* Vertical stack */
+  flex-direction: column;
   gap: 15px;
 }
 
@@ -49,17 +51,18 @@
 }
 
 .orbis-chat-roll .section-label {
-  font-weight: bold;
-  color: #333;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  color: #5c3d2e;
   text-transform: capitalize;
   border: none;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .orbis-chat-roll .section-stats {
-  font-size: 0.9em;
-  color: #555;
-  font-weight: bold;
+  font-size: 0.85em;
+  color: #7a5c48;
+  font-weight: 700;
 }
 
 .orbis-chat-roll .section-stats i {
@@ -72,30 +75,22 @@
   gap: 10px;
 }
 
-/* Specific selector for dice in chat vs sheet */
 .orbis-chat-roll .die {
   width: 30px;
   height: 30px;
   border: none;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
-/* Dice Coloring via Filters (Base is RED) */
-
-/* Attribute: Red (Default) */
-
-/* Skill: Green - Hue Rotate from Red (~0deg) to Green (~120deg) */
 .orbis-chat-roll .skill-die {
   filter: hue-rotate(100deg) brightness(1.2);
 }
 
-/* Cursed: Purple - Hue Rotate from Red (~0deg) to Purple (~290deg) */
 .orbis-chat-roll .cursed-die {
   filter: hue-rotate(290deg) brightness(0.9);
 }
 
-/* Modifier: Black - Grayscale + Darken */
 .orbis-chat-roll .modifier-die {
   filter: grayscale(100%) brightness(0.9);
 }
@@ -107,42 +102,43 @@
 }
 
 .orbis-chat-roll .total-stats {
+  font-family: 'Cinzel', serif;
   font-size: 2em;
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  color: #2c1a0e;
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-/* Icons styling */
 .orbis-chat-roll .fa-times {
-  color: #333; /* Success X */
+  color: #5c3d2e;
 }
 .orbis-chat-roll .fa-skull {
-  color: #333; /* Default Skull */
+  color: #5c3d2e;
 }
 
-/* Force Roll Button */
+/* Bottone Forza il Tiro */
 .orbis-chat-roll .force-roll-container {
   margin-top: 10px;
   width: 100%;
 }
 
 .orbis-chat-roll .force-roll-button {
-  background: #e63946;
-  color: #fff;
+  background: #8b3a2a;
+  color: #faf3e0;
   border: none;
-  font-family: "Cinzel", serif;
-  font-weight: bold;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 1px;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .orbis-chat-roll .force-roll-button:hover {
-  background: #b92b36;
-  box-shadow: 0 0 5px #e63946;
+  background: #a84832;
+  box-shadow: 0 2px 6px rgba(139, 58, 42, 0.3);
 }
