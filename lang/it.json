@@ -32,6 +32,15 @@
       "Health": "Salute",
       "Stress": "Stress",
       "Corruzione": "Corruzione"
+    },
+    "WEAPON": {
+      "DAMAGE": "Danno",
+      "TYPE": "Tipo",
+      "TYPE_MELEE": "Arma Bianca",
+      "TYPE_THROWING": "Arma da Lancio",
+      "TYPE_RANGED": "Arma da Fuoco",
+      "CONDITION": "Stato dell'Arma",
+      "QUALITY": "Qualità"
     }
   },
   "TYPES": {

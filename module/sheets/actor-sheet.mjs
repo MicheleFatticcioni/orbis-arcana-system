@@ -58,16 +58,6 @@ export class SPNSystemActorSheet extends ActorSheet {
         relativeTo: this.actor,
       },
     );
-    // Enrich Inventory (Zaino)
-    context.enrichedInventory = await TextEditor.enrichHTML(
-      this.actor.system.inventory.value,
-      {
-        secrets: this.document.isOwner,
-        async: true,
-        rollData: this.actor.getRollData(),
-        relativeTo: this.actor,
-      },
-    );
 
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects(),

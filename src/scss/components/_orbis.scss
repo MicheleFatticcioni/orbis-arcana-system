@@ -177,20 +177,174 @@ h3 {
 .weapons-section {
   padding: 10px;
 
-  .weapons-grid {
-    /* Grid defined in utility or global */
+  .weapons-list {
+    width: 100%;
   }
 
-  .weapon-card {
-    background: #222;
-    padding: 5px;
-    border: 1px solid #333;
-    margin-bottom: 5px;
+  .weapons-list-header,
+  .weapon-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .weapons-list-header {
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    font-weight: bold;
+  }
+
+  .weapon-row {
+    padding: 4px 2px;
+    border-bottom: 1px solid #333;
+    &:last-child { border-bottom: none; }
+    &:hover { background: #2a2a2a; }
+  }
+
+  .weapon-col {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &.weapon-col-img {
+      flex: 0 0 34px;
+      img { border: none; border-radius: 2px; display: block; }
+    }
+    &.weapon-col-name {
+      flex: 2 1 0;
+      font-weight: bold;
+      color: #f1f1f1;
+    }
+    &.weapon-col-type {
+      flex: 1 1 0;
+      font-size: 0.85em;
+      color: #aaa;
+      text-align: center;
+    }
+    &.weapon-col-damage {
+      flex: 0 0 50px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    &.weapon-col-condition {
+      flex: 0 0 90px;
+      text-align: center;
+    }
+    &.weapon-col-controls {
+      flex: 0 0 60px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      a {
+        color: #888;
+        font-size: 12px;
+        &:hover { color: var(--primary-color); }
+      }
+    }
+  }
+
+  .condition-label {
+    font-size: 0.78em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    border-radius: 3px;
+
+    &.condition-excellent { color: #4caf50; border: 1px solid #4caf50; }
+    &.condition-good      { color: #8bc34a; border: 1px solid #8bc34a; }
+    &.condition-acceptable{ color: #ffc107; border: 1px solid #ffc107; }
+    &.condition-poor      { color: #ff7043; border: 1px solid #ff7043; }
+    &.condition-bad       { color: var(--primary-color); border: 1px solid var(--primary-color); }
+  }
+
+  .item-create {
+    color: #888;
+    font-size: 12px;
+    &:hover { color: var(--primary-color); }
   }
 }
 
 .inventory-section {
   padding: 10px;
+
+  .gear-list {
+    width: 100%;
+  }
+
+  .gear-list-header,
+  .gear-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .gear-list-header {
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    font-weight: bold;
+  }
+
+  .gear-row {
+    padding: 4px 2px;
+    border-bottom: 1px solid #333;
+    &:last-child { border-bottom: none; }
+    &:hover { background: #2a2a2a; }
+  }
+
+  .gear-col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &.gear-col-img {
+      flex: 0 0 34px;
+      img { border: none; border-radius: 2px; display: block; }
+    }
+    &.gear-col-name {
+      flex: 0 0 140px;
+      font-weight: bold;
+      color: #f1f1f1;
+    }
+    &.gear-col-desc {
+      flex: 1 1 0;
+      font-size: 0.85em;
+      color: #aaa;
+    }
+    &.gear-col-qty {
+      flex: 0 0 40px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    &.gear-col-controls {
+      flex: 0 0 60px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      a {
+        color: #888;
+        font-size: 12px;
+        &:hover { color: var(--primary-color); }
+      }
+    }
+  }
+
+  .item-create {
+    color: #888;
+    font-size: 12px;
+    &:hover { color: var(--primary-color); }
+  }
 }
 
 /* Editor Overrides */

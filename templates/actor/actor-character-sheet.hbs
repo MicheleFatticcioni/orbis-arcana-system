@@ -125,30 +125,68 @@
          {{!-- Inventory / Zaino --}}
           <section class="inventory-section">
               <h2 class="section-header">ZAINO</h2>
-              <div class="inventory-editor">
-                {{editor enrichedInventory target="system.inventory.value" engine="prosemirror" button=true editable=editable}}
+              <div class="gear-list">
+                {{!-- Header Row --}}
+                <div class="gear-list-header flexrow">
+                  <div class="gear-col gear-col-img"></div>
+                  <div class="gear-col gear-col-name">{{localize "Name"}}</div>
+                  <div class="gear-col gear-col-desc">Descrizione</div>
+                  <div class="gear-col gear-col-qty">Qt.</div>
+                  <div class="gear-col gear-col-controls">
+                    <a class="item-create" data-type="item" title="Aggiungi Oggetto"><i class="fas fa-plus"></i></a>
+                  </div>
+                </div>
+                {{!-- Gear Rows --}}
+                {{#each gear as |gitem|}}
+                  <div class="gear-row flexrow item" data-item-id="{{gitem._id}}">
+                    <div class="gear-col gear-col-img">
+                      <img src="{{gitem.img}}" title="{{gitem.name}}" width="30" height="30"/>
+                    </div>
+                    <div class="gear-col gear-col-name">{{gitem.name}}</div>
+                    <div class="gear-col gear-col-desc">{{gitem.system.description}}</div>
+                    <div class="gear-col gear-col-qty">{{gitem.system.quantity}}</div>
+                    <div class="gear-col gear-col-controls">
+                      <a class="item-control item-edit" title="Modifica"><i class="fas fa-edit"></i></a>
+                      <a class="item-control item-delete" title="Elimina"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </div>
+                {{/each}}
               </div>
           </section>
 
            {{!-- Weapons Section --}}
            <section class="weapons-section">
               <h2 class="section-header">ARMI</h2>
-              <div class="weapons-grid grid grid-3col">
-                  {{!-- Render existing weapons --}}
-                  {{#each weapons as |item|}}
-                    <div class="weapon-card item" data-item-id="{{item._id}}">
-                        <div class="flexrow flex-between">
-                            <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
-                            <h4 class="item-name">{{item.name}}</h4>
-                            <div class="item-controls">
-                                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                            </div>
-                        </div>
+              <div class="weapons-list">
+                {{!-- Header Row --}}
+                <div class="weapons-list-header flexrow">
+                  <div class="weapon-col weapon-col-img"></div>
+                  <div class="weapon-col weapon-col-name">{{localize "Name"}}</div>
+                  <div class="weapon-col weapon-col-type">{{localize "SPN_SYSTEM.WEAPON.TYPE"}}</div>
+                  <div class="weapon-col weapon-col-damage">{{localize "SPN_SYSTEM.WEAPON.DAMAGE"}}</div>
+                  <div class="weapon-col weapon-col-condition">{{localize "SPN_SYSTEM.WEAPON.CONDITION"}}</div>
+                  <div class="weapon-col weapon-col-controls">
+                    <a class="item-create" data-type="weapon" title="Aggiungi Arma"><i class="fas fa-plus"></i></a>
+                  </div>
+                </div>
+                {{!-- Weapon Rows --}}
+                {{#each weapons as |item|}}
+                  <div class="weapon-row flexrow item" data-item-id="{{item._id}}">
+                    <div class="weapon-col weapon-col-img">
+                      <img src="{{item.img}}" title="{{item.name}}" width="30" height="30"/>
                     </div>
-                  {{/each}}
-                   {{!-- Add Button --}}
-                   <a class="item-create" data-type="weapon" title="Add Weapon"><i class="fas fa-plus"></i> Add Weapon</a>
+                    <div class="weapon-col weapon-col-name">{{item.name}}</div>
+                    <div class="weapon-col weapon-col-type">{{item.system.type}}</div>
+                    <div class="weapon-col weapon-col-damage">{{item.system.damage}}</div>
+                    <div class="weapon-col weapon-col-condition">
+                      <span class="condition-label {{conditionClass item.system.condition.value}}">{{conditionLabel item.system.condition.value}}</span>
+                    </div>
+                    <div class="weapon-col weapon-col-controls">
+                      <a class="item-control item-edit" title="Modifica"><i class="fas fa-edit"></i></a>
+                      <a class="item-control item-delete" title="Elimina"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </div>
+                {{/each}}
               </div>
           </section>
 

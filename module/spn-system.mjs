@@ -80,6 +80,28 @@ Handlebars.registerHelper("sum", function (...args) {
   console.log(args);
   return args.reduce((acc, val) => acc + Number(val), 0);
 });
+
+Handlebars.registerHelper("gte", function (a, b) {
+  return Number(a) >= Number(b);
+});
+
+Handlebars.registerHelper("range", function (start, end) {
+  const result = [];
+  for (let i = start; i < end; i++) {
+    result.push(i);
+  }
+  return result;
+});
+
+Handlebars.registerHelper("conditionLabel", function (value) {
+  const labels = { 5: "Eccellente", 4: "Buono", 3: "Accettabile", 2: "Scarso", 1: "Pessimo" };
+  return labels[Number(value)] ?? "—";
+});
+
+Handlebars.registerHelper("conditionClass", function (value) {
+  const classes = { 5: "condition-excellent", 4: "condition-good", 3: "condition-acceptable", 2: "condition-poor", 1: "condition-bad" };
+  return classes[Number(value)] ?? "";
+});
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

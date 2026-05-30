@@ -819,6 +819,62 @@
 }
 .spn-system .resource-label {
   font-weight: bold;
+  color: #c9c7b8;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.spn-system .resource {
+  margin-bottom: 1rem;
+}
+.spn-system .resource input[type=text],
+.spn-system .resource input[type=number],
+.spn-system .resource select {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #b5b3a4;
+  color: #c9c7b8;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.spn-system .resource input[type=text]:focus,
+.spn-system .resource input[type=number]:focus,
+.spn-system .resource select:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  outline: none;
+}
+.spn-system .resource input[type=text]::placeholder,
+.spn-system .resource input[type=number]::placeholder,
+.spn-system .resource select::placeholder {
+  color: rgba(201, 199, 184, 0.5);
+}
+.spn-system .resource select {
+  cursor: pointer;
+}
+.spn-system .condition-display {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.spn-system .condition-dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #c9c7b8;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+.spn-system .condition-dot:hover {
+  opacity: 0.8;
+}
+.spn-system .condition-dot.filled {
+  background-color: #c9c7b8;
+}
+.spn-system .condition-input {
+  width: 80px;
+  margin-top: 0.5rem;
 }
 .spn-system .items-header {
   height: 28px;
@@ -1090,17 +1146,196 @@
 .spn-system .weapons-section {
   padding: 10px;
 }
-.spn-system .weapons-section .weapons-grid {
-  /* Grid defined in utility or global */
+.spn-system .weapons-section .weapons-list {
+  width: 100%;
 }
-.spn-system .weapons-section .weapon-card {
-  background: #222;
-  padding: 5px;
-  border: 1px solid #333;
-  margin-bottom: 5px;
+.spn-system .weapons-section .weapons-list-header,
+.spn-system .weapons-section .weapon-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.spn-system .weapons-section .weapons-list-header {
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: bold;
+}
+.spn-system .weapons-section .weapon-row {
+  padding: 4px 2px;
+  border-bottom: 1px solid #333;
+}
+.spn-system .weapons-section .weapon-row:last-child {
+  border-bottom: none;
+}
+.spn-system .weapons-section .weapon-row:hover {
+  background: #2a2a2a;
+}
+.spn-system .weapons-section .weapon-col {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-img {
+  flex: 0 0 34px;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-img img {
+  border: none;
+  border-radius: 2px;
+  display: block;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-name {
+  flex: 2 1 0;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-type {
+  flex: 1 1 0;
+  font-size: 0.85em;
+  color: #aaa;
+  text-align: center;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-damage {
+  flex: 0 0 50px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-condition {
+  flex: 0 0 90px;
+  text-align: center;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-controls {
+  flex: 0 0 60px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-controls a {
+  color: #888;
+  font-size: 12px;
+}
+.spn-system .weapons-section .weapon-col.weapon-col-controls a:hover {
+  color: var(--primary-color);
+}
+.spn-system .weapons-section .condition-label {
+  font-size: 0.78em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.spn-system .weapons-section .condition-label.condition-excellent {
+  color: #4caf50;
+  border: 1px solid #4caf50;
+}
+.spn-system .weapons-section .condition-label.condition-good {
+  color: #8bc34a;
+  border: 1px solid #8bc34a;
+}
+.spn-system .weapons-section .condition-label.condition-acceptable {
+  color: #ffc107;
+  border: 1px solid #ffc107;
+}
+.spn-system .weapons-section .condition-label.condition-poor {
+  color: #ff7043;
+  border: 1px solid #ff7043;
+}
+.spn-system .weapons-section .condition-label.condition-bad {
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+.spn-system .weapons-section .item-create {
+  color: #888;
+  font-size: 12px;
+}
+.spn-system .weapons-section .item-create:hover {
+  color: var(--primary-color);
 }
 .spn-system .inventory-section {
   padding: 10px;
+}
+.spn-system .inventory-section .gear-list {
+  width: 100%;
+}
+.spn-system .inventory-section .gear-list-header,
+.spn-system .inventory-section .gear-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.spn-system .inventory-section .gear-list-header {
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: bold;
+}
+.spn-system .inventory-section .gear-row {
+  padding: 4px 2px;
+  border-bottom: 1px solid #333;
+}
+.spn-system .inventory-section .gear-row:last-child {
+  border-bottom: none;
+}
+.spn-system .inventory-section .gear-row:hover {
+  background: #2a2a2a;
+}
+.spn-system .inventory-section .gear-col {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.spn-system .inventory-section .gear-col.gear-col-img {
+  flex: 0 0 34px;
+}
+.spn-system .inventory-section .gear-col.gear-col-img img {
+  border: none;
+  border-radius: 2px;
+  display: block;
+}
+.spn-system .inventory-section .gear-col.gear-col-name {
+  flex: 0 0 140px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+.spn-system .inventory-section .gear-col.gear-col-desc {
+  flex: 1 1 0;
+  font-size: 0.85em;
+  color: #aaa;
+}
+.spn-system .inventory-section .gear-col.gear-col-qty {
+  flex: 0 0 40px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+}
+.spn-system .inventory-section .gear-col.gear-col-controls {
+  flex: 0 0 60px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.spn-system .inventory-section .gear-col.gear-col-controls a {
+  color: #888;
+  font-size: 12px;
+}
+.spn-system .inventory-section .gear-col.gear-col-controls a:hover {
+  color: var(--primary-color);
+}
+.spn-system .inventory-section .item-create {
+  color: #888;
+  font-size: 12px;
+}
+.spn-system .inventory-section .item-create:hover {
+  color: var(--primary-color);
 }
 .spn-system .editor-content {
   background: #f1f1f1;
@@ -1372,5 +1607,3 @@
   background: #b92b36;
   box-shadow: 0 0 5px #e63946;
 }
-
-/*# sourceMappingURL=spn-system.css.map */

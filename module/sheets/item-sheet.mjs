@@ -1,7 +1,7 @@
 import {
   onManageActiveEffect,
   prepareActiveEffectCategories,
-} from '../helpers/effects.mjs';
+} from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -11,14 +11,14 @@ export class SPNSystemItemSheet extends ItemSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['spn-system', 'sheet', 'item'],
+      classes: ["spn-system", "sheet", "item"],
       width: 520,
       height: 480,
       tabs: [
         {
-          navSelector: '.sheet-tabs',
-          contentSelector: '.sheet-body',
-          initial: 'description',
+          navSelector: ".sheet-tabs",
+          contentSelector: ".sheet-body",
+          initial: "attributes",
         },
       ],
     });
@@ -26,7 +26,7 @@ export class SPNSystemItemSheet extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = 'systems/spn-system/templates/item';
+    const path = "systems/spn-system/templates/item";
     // Return a single sheet for all item types.
     // return `${path}/item-sheet.hbs`;
 
@@ -58,7 +58,7 @@ export class SPNSystemItemSheet extends ItemSheet {
         rollData: this.item.getRollData(),
         // Relative UUID resolution
         relativeTo: this.item,
-      }
+      },
     );
 
     // Add the item's data to context.data for easier access, as well as flags.
@@ -83,11 +83,15 @@ export class SPNSystemItemSheet extends ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Roll handlers, click handlers, etc. would go here.
+    // Condition dots click handler for weapons
+    html.on("click", ".condition-dot", async (ev) => {
+      const value = Number(ev.currentTarget.dataset.value);
+      await this.item.update({ "system.condition.value": value });
+    });
 
     // Active Effect management
-    html.on('click', '.effect-control', (ev) =>
-      onManageActiveEffect(ev, this.item)
+    html.on("click", ".effect-control", (ev) =>
+      onManageActiveEffect(ev, this.item),
     );
   }
 }

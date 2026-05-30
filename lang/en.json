@@ -27,6 +27,15 @@
     },
     "Skills": {
       "Fig": { "long": "Fight" }
+    },
+    "WEAPON": {
+      "DAMAGE": "Damage",
+      "TYPE": "Type",
+      "TYPE_MELEE": "Melee Weapon",
+      "TYPE_THROWING": "Throwing Weapon",
+      "TYPE_RANGED": "Ranged Weapon",
+      "CONDITION": "Weapon Condition",
+      "QUALITY": "Quality"
     }
   },
 
@@ -38,7 +47,8 @@
     "Item": {
       "item": "Item",
       "feature": "Feature",
-      "spell": "Spell"
+      "spell": "Spell",
+      "weapon": "Weapon"
     }
   }
 }

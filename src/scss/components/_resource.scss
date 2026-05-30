@@ -1,3 +1,67 @@
+@import '../utils/colors';
+
 .resource-label {
   font-weight: bold;
+  color: $c-faint;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.resource {
+  margin-bottom: 1rem;
+
+  input[type='text'],
+  input[type='number'],
+  select {
+    background-color: rgba($c-white, 0.1);
+    border: 1px solid $c-beige;
+    color: $c-faint;
+    padding: 0.5rem;
+    border-radius: 4px;
+
+    &:focus {
+      background-color: rgba($c-white, 0.15);
+      border-color: $c-white;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: rgba($c-faint, 0.5);
+    }
+  }
+
+  select {
+    cursor: pointer;
+  }
+}
+
+.condition-display {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.condition-dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid $c-faint;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.filled {
+    background-color: $c-faint;
+  }
+}
+
+.condition-input {
+  width: 80px;
+  margin-top: 0.5rem;
 }

@@ -83,8 +83,14 @@
     },
     "weapon": {
       "templates": ["base"],
-      "damage": "",
-      "range": ""
+      "damage": 0,
+      "type": "arma bianca",
+      "condition": {
+        "value": 5,
+        "min": 0,
+        "max": 5
+      },
+      "quality": ""
     }
   }
 }
