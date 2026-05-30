@@ -75,7 +75,13 @@
     },
     "feature": {
       "templates": ["base"],
-      "level": 1
+      "dotType": "generico",
+      "currentLevel": 1,
+      "levels": [
+        { "level": "1", "description": "", "modifier": "" },
+        { "level": "2", "description": "", "modifier": "" },
+        { "level": "3", "description": "", "modifier": "" }
+      ]
     },
     "spell": {
       "templates": ["base"],

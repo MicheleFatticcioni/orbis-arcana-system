@@ -28,6 +28,29 @@
     "Skills": {
       "Fig": { "long": "Fight" }
     },
+    "FEATURE": {
+      "NAME": "Name",
+      "LEVEL": "Level",
+      "CURRENT_LEVEL": "Current Level",
+      "TYPE": "Type",
+      "DESCRIPTION": "Description",
+      "LEVELS_TITLE": "Level Descriptions",
+      "MODIFIER": "Modifier",
+      "MODIFIER_PLACEHOLDER": "e.g. +1d6",
+      "LEVEL_DESC_PLACEHOLDER": "Level description...",
+      "TYPES": {
+        "generico": "Generic",
+        "cacciatore": "Hunter",
+        "occultista": "Occultist",
+        "truffatore": "Trickster",
+        "letterato": "Scholar"
+      },
+      "CREATE": "New Talent",
+      "EDIT": "Edit Talent",
+      "DELETE": "Delete Talent",
+      "SHOW_CHAT": "Show in Chat",
+      "CYCLE_LEVEL": "Click to change level"
+    },
     "WEAPON": {
       "DAMAGE": "Damage",
       "TYPE": "Type",

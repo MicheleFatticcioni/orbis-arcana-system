@@ -187,6 +187,54 @@ export class SPNSystemActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
+    html.on("click", ".item-chat", async (ev) => {
+      ev.preventDefault();
+      const itemId = ev.currentTarget.dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      if (!item || item.type !== "feature") return;
+
+      const level = item.system.currentLevel || 1;
+      const levels = item.system.levels || [];
+      const lvlData = levels[level - 1];
+
+      let content = `<div class="dote-chat-card">
+        <h3 class="dote-chat-title">${item.name}</h3>
+        <div class="dote-chat-meta">
+          <span class="dote-chat-type">${item.system.dotType || ""}</span>
+          <span class="dote-chat-level">${game.i18n.localize("SPN_SYSTEM.FEATURE.LEVEL")} ${level}</span>
+        </div>`;
+
+      if (item.system.description) {
+        content += `<p class="dote-chat-desc">${item.system.description}</p>`;
+      }
+
+      if (lvlData?.description) {
+        content += `<p class="dote-chat-level-desc">${lvlData.description}</p>`;
+      }
+
+      if (lvlData?.modifier) {
+        content += `<p class="dote-chat-modifier"><strong>${game.i18n.localize("SPN_SYSTEM.FEATURE.MODIFIER")}:</strong> ${lvlData.modifier}</p>`;
+      }
+
+      content += `</div>`;
+
+      ChatMessage.create({
+        user: game.user.id,
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: content,
+      });
+    });
+
+    html.on("click", ".rollable-level", async (ev) => {
+      ev.preventDefault();
+      const itemId = ev.currentTarget.dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      if (!item || item.type !== "feature") return;
+      const current = item.system.currentLevel || 1;
+      const next = current >= 3 ? 1 : current + 1;
+      await item.update({ "system.currentLevel": next });
+    });
+
     html.on("click", ".effect-control", (ev) => {
       const row = ev.currentTarget.closest("li");
       const document =

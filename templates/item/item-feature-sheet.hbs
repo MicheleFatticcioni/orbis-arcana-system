@@ -1,36 +1,63 @@
-<form class="{{cssClass}}" autocomplete="off">
-  <header class="sheet-header">
+<form class="{{cssClass}} feature-sheet" autocomplete="off">
+  <header class="sheet-header feature-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'SPN_SYSTEM.FEATURE.NAME'}}"/>
+      </h1>
+      <div class="feature-type-row flexrow">
+        <label class="light-label">{{localize 'SPN_SYSTEM.FEATURE.TYPE'}}</label>
+        <select name="system.dotType">
+          <option value="generico" {{#eq system.dotType "generico"}}selected{{/eq}}>Generico</option>
+          <option value="cacciatore" {{#eq system.dotType "cacciatore"}}selected{{/eq}}>Cacciatore</option>
+          <option value="occultista" {{#eq system.dotType "occultista"}}selected{{/eq}}>Occultista</option>
+          <option value="truffatore" {{#eq system.dotType "truffatore"}}selected{{/eq}}>Truffatore</option>
+          <option value="letterato" {{#eq system.dotType "letterato"}}selected{{/eq}}>Letterato</option>
+        </select>
+        <label class="light-label" style="margin-left:12px;">{{localize 'SPN_SYSTEM.FEATURE.CURRENT_LEVEL'}}</label>
+        <select name="system.currentLevel">
+          <option value="1" {{#eq system.currentLevel 1}}selected{{/eq}}>1</option>
+          <option value="2" {{#eq system.currentLevel 2}}selected{{/eq}}>2</option>
+          <option value="3" {{#eq system.currentLevel 3}}selected{{/eq}}>3</option>
+        </select>
+      </div>
     </div>
   </header>
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="attributes">Attributes</a>
-    <a class="item" data-tab="effects">Effects</a>
-  </nav>
+  <section class="sheet-body feature-body">
 
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
-
-    {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="description">
-      {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
+    <div class="feature-description">
+      <label class="section-label">{{localize 'SPN_SYSTEM.FEATURE.DESCRIPTION'}}</label>
       {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
     </div>
 
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      {{!-- As you add new fields, add them in here! --}}
+    <div class="feature-levels">
+      <label class="section-label">{{localize 'SPN_SYSTEM.FEATURE.LEVELS_TITLE'}}</label>
+
+      {{#each system.levels as |lvl|}}
+        <div class="feature-level-block {{#eq lvl.level (stringify @root.system.currentLevel)}}active-level{{/eq}}">
+          <div class="level-header flexrow">
+            <span class="level-badge">{{localize 'SPN_SYSTEM.FEATURE.LEVEL'}} {{lvl.level}}</span>
+            {{#if lvl.modifier}}
+              <span class="level-modifier">{{lvl.modifier}}</span>
+            {{/if}}
+          </div>
+          <div class="level-fields">
+            <textarea
+              name="system.levels.{{@index}}.description"
+              placeholder="{{localize 'SPN_SYSTEM.FEATURE.LEVEL_DESC_PLACEHOLDER'}}"
+              rows="3"
+            >{{lvl.description}}</textarea>
+            <input
+              type="text"
+              name="system.levels.{{@index}}.modifier"
+              value="{{lvl.modifier}}"
+              placeholder="{{localize 'SPN_SYSTEM.FEATURE.MODIFIER_PLACEHOLDER'}}"
+            />
+          </div>
+        </div>
+      {{/each}}
     </div>
 
-    {{!-- Effects Tab --}}
-    <div class="tab effects" data-group="primary" data-tab="effects">
-      {{> "systems/spn-system/templates/item/parts/item-effects.hbs"}}
-    </div>
   </section>
-
 </form>

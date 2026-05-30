@@ -122,6 +122,209 @@
   padding: 0 8px;
 }
 
+// -----------------------------------------
+// Doti (Features/Talents) List
+// -----------------------------------------
+
+.doti-list {
+  .doti-level-header {
+    flex: 0 0 70px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  .doti-level {
+    flex: 0 0 70px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: $c-tan;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px 6px;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+}
+
+// -----------------------------------------
+// Feature (Dote) Item Sheet
+// -----------------------------------------
+
+.feature-sheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .feature-header {
+    gap: 10px;
+  }
+
+  .feature-type-row {
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+
+    select {
+      flex: 1;
+      min-width: 100px;
+      background: rgba(0, 0, 0, 0.3);
+      color: $c-tan;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
+    .light-label {
+      white-space: nowrap;
+    }
+  }
+
+  .feature-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $c-tan;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .feature-description {
+    min-height: 80px;
+  }
+
+  .feature-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .feature-level-block {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    transition: border-color 0.2s;
+
+    &.active-level {
+      border-color: rgba(200, 170, 100, 0.5);
+      background: rgba(200, 170, 100, 0.06);
+    }
+
+    .level-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .level-badge {
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: $c-tan;
+    }
+
+    .level-modifier {
+      font-size: 12px;
+      color: #7ec8a0;
+      font-style: italic;
+      background: rgba(126, 200, 160, 0.1);
+      border-radius: 4px;
+      padding: 1px 6px;
+    }
+
+    .level-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      textarea {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.25);
+        color: $c-tan;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 4px;
+        padding: 6px;
+        font-size: 13px;
+        resize: vertical;
+        box-sizing: border-box;
+      }
+
+      input[type="text"] {
+        background: rgba(0, 0, 0, 0.25);
+        color: #7ec8a0;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 4px;
+        padding: 4px 8px;
+        font-size: 12px;
+        font-style: italic;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+// -----------------------------------------
+// Dote Chat Card
+// -----------------------------------------
+
+.dote-chat-card {
+  padding: 4px 2px;
+
+  .dote-chat-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 0 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 4px;
+  }
+
+  .dote-chat-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    opacity: 0.7;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dote-chat-desc {
+    font-style: italic;
+    font-size: 12px;
+    margin-bottom: 4px;
+    opacity: 0.8;
+  }
+
+  .dote-chat-level-desc {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .dote-chat-modifier {
+    font-size: 12px;
+    color: #7ec8a0;
+  }
+}
+
 .light-label {
   font-size: 10px;
   color: var(--color-zinc-500);

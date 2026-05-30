@@ -33,6 +33,29 @@
       "Stress": "Stress",
       "Corruzione": "Corruzione"
     },
+    "FEATURE": {
+      "NAME": "Nome",
+      "LEVEL": "Livello",
+      "CURRENT_LEVEL": "Livello Attuale",
+      "TYPE": "Tipo",
+      "DESCRIPTION": "Descrizione",
+      "LEVELS_TITLE": "Descrizione per Livello",
+      "MODIFIER": "Modificatore",
+      "MODIFIER_PLACEHOLDER": "Es. +1d6",
+      "LEVEL_DESC_PLACEHOLDER": "Descrizione del livello...",
+      "TYPES": {
+        "generico": "Generico",
+        "cacciatore": "Cacciatore",
+        "occultista": "Occultista",
+        "truffatore": "Truffatore",
+        "letterato": "Letterato"
+      },
+      "CREATE": "Nuova Dote",
+      "EDIT": "Modifica Dote",
+      "DELETE": "Elimina Dote",
+      "SHOW_CHAT": "Mostra in Chat",
+      "CYCLE_LEVEL": "Clicca per cambiare livello"
+    },
     "WEAPON": {
       "DAMAGE": "Danno",
       "TYPE": "Tipo",
