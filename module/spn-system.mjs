@@ -7,6 +7,7 @@ import { SPNSystemItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { SPN_SYSTEM } from "./helpers/config.mjs";
+import { DEFAULT_DOTI } from "./helpers/default-doti.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -106,10 +107,56 @@ Handlebars.registerHelper("conditionClass", function (value) {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once("ready", function () {
-  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+Hooks.once("ready", async function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
+  await _createDotiFolders();
 });
+
+async function _createDotiFolders() {
+  if (!game.user.isGM) return;
+
+  // Esci solo se gli item esistono già
+  if (game.items.find(i => i.type === "feature" && i.folder)) return;
+
+  const TIPI = [
+    ["Generico",   "#888888", "generico"],
+    ["Cacciatore", "#8B4513", "cacciatore"],
+    ["Occultista", "#4B0082", "occultista"],
+    ["Truffatore", "#2F4F4F", "truffatore"],
+    ["Letterato",  "#8B6914", "letterato"]
+  ];
+
+  // Recupera o crea la cartella principale
+  let principale = game.folders.find(f => f.name === "Doti" && f.type === "Item" && !f.folder);
+  if (!principale) {
+    principale = await Folder.create({ name: "Doti", type: "Item", color: "#5b3a8c", sorting: "a" });
+  }
+
+  // Recupera o crea le sottocartelle
+  const sottocartelle = {};
+  for (const [nome, colore, chiave] of TIPI) {
+    let sub = game.folders.find(f => f.name === nome && f.type === "Item" && f.folder?.id === principale.id);
+    if (!sub) {
+      sub = await Folder.create({ name: nome, type: "Item", folder: principale.id, color: colore, sorting: "a" });
+    }
+    sottocartelle[chiave] = sub.id;
+  }
+
+  // Crea gli item
+  for (const dote of DEFAULT_DOTI) {
+    await Item.create({
+      name: dote.name,
+      type: "feature",
+      folder: sottocartelle[dote.dotType],
+      system: {
+        description: dote.description,
+        dotType: dote.dotType,
+        currentLevel: 1,
+        levels: dote.levels
+      }
+    });
+  }
+}
 
 Hooks.on("renderChatMessage", (message, html, data) => {
   // Listen for Force Roll button click
