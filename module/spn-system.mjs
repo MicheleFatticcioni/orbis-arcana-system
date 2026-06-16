@@ -8,6 +8,7 @@ import { SPNSystemItemSheet } from "./sheets/item-sheet.mjs";
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { SPN_SYSTEM } from "./helpers/config.mjs";
 import { DEFAULT_DOTI } from "./helpers/default-doti.mjs";
+import { DEFAULT_WEAPONS } from "./helpers/default-weapons.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -110,6 +111,7 @@ Handlebars.registerHelper("conditionClass", function (value) {
 Hooks.once("ready", async function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
   await _createDotiFolders();
+  await _createDefaultWeapons();
 });
 
 async function _createDotiFolders() {
@@ -158,6 +160,32 @@ async function _createDotiFolders() {
   }
 }
 
+async function _createDefaultWeapons() {
+  if (!game.user.isGM) return;
+  if (game.items.find(i => i.type === "weapon")) return;
+
+  let folder = game.folders.find(f => f.name === "Armi" && f.type === "Item" && !f.folder);
+  if (!folder) {
+    folder = await Folder.create({ name: "Armi", type: "Item", color: "#8B0000", sorting: "a" });
+  }
+
+  for (const weapon of DEFAULT_WEAPONS) {
+    await Item.create({
+      name: weapon.name,
+      type: "weapon",
+      folder: folder.id,
+      system: {
+        damage: weapon.damage,
+        type: weapon.type,
+        range_meters: weapon.range_meters,
+        ammo: weapon.ammo,
+        cost_euro: weapon.cost_euro,
+        health_status: weapon.health_status
+      }
+    });
+  }
+}
+
 Hooks.on("renderChatMessage", (message, html, data) => {
   // Listen for Force Roll button click
   html.find(".force-roll-button").click(async (ev) => {
@@ -198,12 +226,9 @@ Hooks.on("renderChatMessage", (message, html, data) => {
     // Process each pool
     const newAttrDice = await processPool(rollData.attrDice);
     const newSkillDice = await processPool(rollData.skillDice);
+    const newWeaponDice = await processPool(rollData.weaponDice || []);
     const newModDice = await processPool(rollData.modDice);
-    const newCursedDice = await processPool(rollData.cursedDice); // Do we reroll cursed dice? "rilanciano tutti i risultati diversi da 6 e da 1".
-    // Usually Cursed Dice are NOT rerolled in many systems or have special rules.
-    // But the prompt says "tutti i risultati diversi da 6 e da 1".
-    // If a Cursed die is 2-5, it's not 1 or 6. If it's 1 it's kept. If it's 6 it's kept.
-    // Assuming strict interpretation: reroll them too.
+    const newCursedDice = await processPool(rollData.cursedDice);
 
     // Calculate new stats
     const getStats = (results) => ({
@@ -213,12 +238,14 @@ Hooks.on("renderChatMessage", (message, html, data) => {
 
     const attrStats = getStats(newAttrDice);
     const skillStats = getStats(newSkillDice);
+    const weaponStats = getStats(newWeaponDice);
     const modStats = getStats(newModDice);
     const cursedStats = getStats(newCursedDice);
 
     const allResults = [
       ...newAttrDice,
       ...newSkillDice,
+      ...newWeaponDice,
       ...newModDice,
       ...newCursedDice,
     ];
@@ -238,6 +265,11 @@ Hooks.on("renderChatMessage", (message, html, data) => {
       skillDice: newSkillDice,
       skillStats: skillStats,
       hasSkill: newSkillDice.length > 0,
+
+      hasWeapon: newWeaponDice.length > 0,
+      weaponLabel: rollData.weaponLabel || "DANNO ARMA",
+      weaponDice: newWeaponDice,
+      weaponStats: weaponStats,
 
       cursedDice: newCursedDice,
       cursedStats: cursedStats,
@@ -267,11 +299,13 @@ Hooks.on("renderChatMessage", (message, html, data) => {
           rollData: {
             attrDice: newAttrDice,
             skillDice: newSkillDice,
+            weaponDice: newWeaponDice,
             modDice: newModDice,
             cursedDice: newCursedDice,
             label: rollData.label + " (Forzato)",
             attributeKey: rollData.attributeKey,
             skillLabel: rollData.skillLabel,
+            weaponLabel: rollData.weaponLabel,
           },
         },
       },

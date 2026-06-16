@@ -27,7 +27,6 @@
 
     {{! Description Tab }}
     <div class='tab' data-group='primary' data-tab='description'>
-      {{! Editors must receive enriched text data from getData to properly handle rolls }}
       {{editor
         enrichedDescription
         target='system.description'
@@ -39,6 +38,22 @@
 
     {{! Attributes Tab }}
     <div class='tab attributes' data-group='primary' data-tab='attributes'>
+
+      <div class='resource'>
+        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.TYPE"}}</label>
+        <select name='system.type' style="height: auto;">
+          <option value='melee' {{#if (eq system.type "melee")}}selected{{/if}}>
+            {{localize "SPN_SYSTEM.WEAPON.TYPE_MELEE"}}
+          </option>
+          <option value='throwing' {{#if (eq system.type "throwing")}}selected{{/if}}>
+            {{localize "SPN_SYSTEM.WEAPON.TYPE_THROWING"}}
+          </option>
+          <option value='firearm' {{#if (eq system.type "firearm")}}selected{{/if}}>
+            {{localize "SPN_SYSTEM.WEAPON.TYPE_RANGED"}}
+          </option>
+        </select>
+      </div>
+
       <div class='resource'>
         <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.DAMAGE"}}</label>
         <input
@@ -50,32 +65,45 @@
       </div>
 
       <div class='resource'>
-        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.TYPE"}}</label>
-        <select name='system.type' style="height: auto;">
-          <option value='arma bianca' {{#if (eq system.type "arma bianca")}}selected{{/if}}>
-            {{localize "SPN_SYSTEM.WEAPON.TYPE_MELEE"}}
-          </option>
-          <option value='arma da lancio' {{#if (eq system.type "arma da lancio")}}selected{{/if}}>
-            {{localize "SPN_SYSTEM.WEAPON.TYPE_THROWING"}}
-          </option>
-          <option value='arma da fuoco' {{#if (eq system.type "arma da fuoco")}}selected{{/if}}>
-            {{localize "SPN_SYSTEM.WEAPON.TYPE_RANGED"}}
-          </option>
-        </select>
+        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.RANGE"}}</label>
+        <input
+          type='text'
+          name='system.range_meters'
+          value='{{system.range_meters}}'
+          placeholder='es. 5-20 / Engaged'
+        />
       </div>
 
-      {{#if (eq system.type "arma da fuoco")}}
+      {{#if (eq system.type "firearm")}}
       <div class='resource'>
-        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.CONDITION"}}</label>
-        <div class='condition-display'>
-          {{#each (range 1 6)}}
-            <span class='condition-dot {{#if (gte ../system.condition.value this)}}filled{{/if}}' data-value='{{this}}' data-testid='condition-dot'></span>
-          {{/each}}
+        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.AMMO"}}</label>
+        <div class='resource-content flexrow flex-center'>
+          <input type='number' name='system.ammo.value' value='{{system.ammo.value}}' min='0' />
+          <span>/</span>
+          <input type='number' name='system.ammo.max' value='{{system.ammo.max}}' min='0' />
         </div>
       </div>
       {{/if}}
 
-      
+      <div class='resource'>
+        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.COST"}}</label>
+        <input
+          type='number'
+          name='system.cost_euro'
+          value='{{system.cost_euro}}'
+          min='0'
+        />
+      </div>
+
+      <div class='resource'>
+        <label class='resource-label'>{{localize "SPN_SYSTEM.WEAPON.HEALTH_STATUS"}}</label>
+        <div class='condition-display'>
+          {{#each (range 1 6)}}
+            <span class='condition-dot {{#if (gte ../system.health_status.value this)}}filled{{/if}}' data-value='{{this}}' data-testid='condition-dot'></span>
+          {{/each}}
+        </div>
+      </div>
+
     </div>
   </section>
 </form>

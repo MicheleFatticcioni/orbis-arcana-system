@@ -1,0 +1,27 @@
+<form class="orbis-roll-dialog">
+  <div class="roll-header">
+    <h1 class="roll-title">{{weaponName}}</h1>
+    <div class="roll-details">
+      <span class="roll-detail">Danno arma: +{{damage}}d6</span>
+    </div>
+  </div>
+
+  <div class="roll-modifier">
+    <label>Caratteristica &amp; Abilità</label>
+    <select name="attribute">
+      <option value="forza" {{#if (eq defaultAttr "forza")}}selected{{/if}}>
+        Forza ({{forzaValue}}) + Rissa ({{rissaValue}})
+      </option>
+      <option value="agilita" {{#if (eq defaultAttr "agilita")}}selected{{/if}}>
+        Agilità ({{agilitaValue}}) + Armi da Fuoco ({{armiValue}})
+      </option>
+    </select>
+  </div>
+
+  <div class="roll-modifier">
+    <label>Bonus (opzionale)</label>
+    <div class="modifier-controls">
+      <input type="number" name="modifier" value="0" autofocus />
+    </div>
+  </div>
+</form>

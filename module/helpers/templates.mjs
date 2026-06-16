@@ -12,5 +12,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/spn-system/templates/actor/parts/actor-effects.hbs',
     // Item partials
     'systems/spn-system/templates/item/parts/item-effects.hbs',
+    // Dialogs
+    'systems/spn-system/templates/dialog/weapon-attack-dialog.hbs',
   ]);
 };

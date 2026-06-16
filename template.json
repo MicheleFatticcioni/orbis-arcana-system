@@ -90,8 +90,14 @@
     "weapon": {
       "templates": ["base"],
       "damage": 0,
-      "type": "arma bianca",
-      "condition": {
+      "type": "melee",
+      "range_meters": "",
+      "ammo": {
+        "value": 0,
+        "max": 0
+      },
+      "cost_euro": 0,
+      "health_status": {
         "value": 5,
         "min": 0,
         "max": 5

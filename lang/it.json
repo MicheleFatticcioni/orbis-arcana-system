@@ -62,7 +62,10 @@
       "TYPE_MELEE": "Arma Bianca",
       "TYPE_THROWING": "Arma da Lancio",
       "TYPE_RANGED": "Arma da Fuoco",
-      "CONDITION": "Stato dell'Arma",
+      "RANGE": "Gittata",
+      "AMMO": "Munizioni",
+      "COST": "Costo (€)",
+      "HEALTH_STATUS": "Stato",
       "QUALITY": "Qualità"
     }
   },

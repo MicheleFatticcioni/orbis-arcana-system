@@ -235,6 +235,8 @@ export class SPNSystemActorSheet extends ActorSheet {
       await item.update({ "system.currentLevel": next });
     });
 
+    html.on("click", ".weapon-attack", this._onWeaponAttack.bind(this));
+
     html.on("click", ".effect-control", (ev) => {
       const row = ev.currentTarget.closest("li");
       const document =
@@ -275,6 +277,150 @@ export class SPNSystemActorSheet extends ActorSheet {
     };
     delete itemData.system["type"];
     return await Item.create(itemData, { parent: this.actor });
+  }
+
+  async _onWeaponAttack(event) {
+    event.preventDefault();
+    const li = event.currentTarget.closest(".item");
+    const item = this.actor.items.get(li.dataset.itemId);
+    if (!item || item.type !== "weapon") return;
+
+    const weapon = item.system;
+    const attrs = this.actor.system.attributes;
+    const skills = this.actor.system.skills;
+    const defaultAttr = weapon.type === "firearm" || weapon.type === "throwing" ? "agilita" : "forza";
+
+    const content = await renderTemplate(
+      "systems/spn-system/templates/dialog/weapon-attack-dialog.hbs",
+      {
+        weaponName: item.name,
+        damage: weapon.damage,
+        defaultAttr,
+        forzaValue: attrs.forza.value,
+        agilitaValue: attrs.agilita.value,
+        rissaValue: skills.rissa.value,
+        armiValue: skills.armi_da_fuoco.value,
+      }
+    );
+
+    new Dialog(
+      {
+        title: `Attacco: ${item.name}`,
+        content,
+        buttons: {
+          roll: {
+            label: "TIRA",
+            callback: (html) => {
+              const attrKey = html.find('[name="attribute"]').val();
+              const modifier = Number(html.find('[name="modifier"]').val()) || 0;
+              const cursedDice = this.actor.system.tracks.dadi_maledetti.value || 0;
+
+              const skillKey = attrKey === "agilita" ? "armi_da_fuoco" : "rissa";
+              const skillLabel = attrKey === "agilita" ? "ARMI DA FUOCO" : "RISSA";
+              const attrLabel = attrKey === "agilita" ? "AGILITÀ" : "FORZA";
+
+              let effectiveAttr = attrs[attrKey].value;
+              let effectiveSkill = skills[skillKey].value;
+              let effectiveMod = modifier;
+
+              if (effectiveMod < 0) {
+                let reduce = Math.abs(effectiveMod);
+                if (effectiveSkill >= reduce) {
+                  effectiveSkill -= reduce;
+                  reduce = 0;
+                } else {
+                  reduce -= effectiveSkill;
+                  effectiveSkill = 0;
+                  effectiveAttr = Math.max(0, effectiveAttr - reduce);
+                }
+                effectiveMod = 0;
+              }
+
+              async function rollPool(count) {
+                if (count <= 0) return [];
+                const r = new Roll(`${count}d6`);
+                await r.evaluate();
+                return r.dice[0].results;
+              }
+
+              (async () => {
+                const attrResults = await rollPool(effectiveAttr);
+                const skillResults = await rollPool(effectiveSkill);
+                const weaponResults = await rollPool(weapon.damage);
+                const modResults = await rollPool(effectiveMod);
+                const cursedResults = await rollPool(cursedDice);
+
+                const getStats = (results) => ({
+                  success: results.filter((d) => d.result === 6).length,
+                  cursed: results.filter((d) => d.result === 1).length,
+                });
+
+                const allResults = [...attrResults, ...skillResults, ...weaponResults, ...modResults, ...cursedResults];
+                const successCount = allResults.filter((d) => d.result === 6).length;
+                const totalCursedCount = allResults.filter((d) => d.result === 1).length;
+
+                const cardData = {
+                  label: `Attacco: ${item.name}`,
+                  hasAttribute: attrResults.length > 0,
+                  attributeKey: attrLabel,
+                  attributeDice: attrResults,
+                  attributeStats: getStats(attrResults),
+                  hasSkill: skillResults.length > 0,
+                  skillLabel,
+                  skillDice: skillResults,
+                  skillStats: getStats(skillResults),
+                  hasWeapon: weaponResults.length > 0,
+                  weaponLabel: "DANNO ARMA",
+                  weaponDice: weaponResults,
+                  weaponStats: getStats(weaponResults),
+                  hasModifier: modResults.length > 0,
+                  modifierDice: modResults,
+                  modifierStats: getStats(modResults),
+                  hasCursed: cursedResults.length > 0,
+                  cursedDice: cursedResults,
+                  cursedStats: getStats(cursedResults),
+                  successCount,
+                  cursedCount: totalCursedCount,
+                };
+
+                const chatHtml = await renderTemplate(
+                  "systems/spn-system/templates/chat/roll-card.hbs",
+                  cardData
+                );
+
+                if (game.settings.get("core", "rollMode") !== "blind") {
+                  AudioHelper.play({ src: CONFIG.sounds.dice });
+                }
+
+                ChatMessage.create({
+                  user: game.user.id,
+                  speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                  content: chatHtml,
+                  type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+                  flags: {
+                    "spn-system": {
+                      rollData: {
+                        attrDice: attrResults,
+                        skillDice: skillResults,
+                        weaponDice: weaponResults,
+                        modDice: modResults,
+                        cursedDice: cursedResults,
+                        label: `Attacco: ${item.name}`,
+                        attributeKey: attrLabel,
+                        skillLabel,
+                        weaponLabel: "DANNO ARMA",
+                      },
+                    },
+                  },
+                });
+              })();
+            },
+          },
+        },
+        default: "roll",
+      },
+      { classes: ["orbis-dialog"] }
+    ).render(true);
   }
 
   /**

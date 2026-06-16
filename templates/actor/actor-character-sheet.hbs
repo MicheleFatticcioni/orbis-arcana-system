@@ -164,7 +164,9 @@
                   <div class="weapon-col weapon-col-name">{{localize "Name"}}</div>
                   <div class="weapon-col weapon-col-type">{{localize "SPN_SYSTEM.WEAPON.TYPE"}}</div>
                   <div class="weapon-col weapon-col-damage">{{localize "SPN_SYSTEM.WEAPON.DAMAGE"}}</div>
-                  <div class="weapon-col weapon-col-condition">{{localize "SPN_SYSTEM.WEAPON.CONDITION"}}</div>
+                  <div class="weapon-col weapon-col-range">{{localize "SPN_SYSTEM.WEAPON.RANGE"}}</div>
+                  <div class="weapon-col weapon-col-ammo">{{localize "SPN_SYSTEM.WEAPON.AMMO"}}</div>
+                  <div class="weapon-col weapon-col-condition">{{localize "SPN_SYSTEM.WEAPON.HEALTH_STATUS"}}</div>
                   <div class="weapon-col weapon-col-controls">
                     <a class="item-create" data-type="weapon" title="Aggiungi Arma"><i class="fas fa-plus"></i></a>
                   </div>
@@ -178,10 +180,19 @@
                     <div class="weapon-col weapon-col-name">{{item.name}}</div>
                     <div class="weapon-col weapon-col-type">{{item.system.type}}</div>
                     <div class="weapon-col weapon-col-damage">{{item.system.damage}}</div>
+                    <div class="weapon-col weapon-col-range">{{item.system.range_meters}}</div>
+                    <div class="weapon-col weapon-col-ammo">
+                      {{#if (eq item.system.type "firearm")}}
+                        {{item.system.ammo.value}}/{{item.system.ammo.max}}
+                      {{else}}
+                        —
+                      {{/if}}
+                    </div>
                     <div class="weapon-col weapon-col-condition">
-                      <span class="condition-label {{conditionClass item.system.condition.value}}">{{conditionLabel item.system.condition.value}}</span>
+                      <span class="condition-label {{conditionClass item.system.health_status.value}}">{{conditionLabel item.system.health_status.value}}</span>
                     </div>
                     <div class="weapon-col weapon-col-controls">
+                      <a class="item-control weapon-attack" title="Attacca"><i class="fas fa-dice-d6"></i></a>
                       <a class="item-control item-edit" title="Modifica"><i class="fas fa-edit"></i></a>
                       <a class="item-control item-delete" title="Elimina"><i class="fas fa-trash"></i></a>
                     </div>

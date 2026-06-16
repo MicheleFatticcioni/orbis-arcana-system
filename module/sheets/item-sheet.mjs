@@ -86,7 +86,7 @@ export class SPNSystemItemSheet extends ItemSheet {
     // Condition dots click handler for weapons
     html.on("click", ".condition-dot", async (ev) => {
       const value = Number(ev.currentTarget.dataset.value);
-      await this.item.update({ "system.condition.value": value });
+      await this.item.update({ "system.health_status.value": value });
     });
 
     // Active Effect management

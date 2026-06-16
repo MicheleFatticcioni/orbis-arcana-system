@@ -1,6 +1,6 @@
 {
   "name": "spn-system",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "CSS compiler for the SPNSystem system",
   "scripts": {
     "build": "sass src/scss/spn-system.scss css/spn-system.css --style=expanded --no-source-map",

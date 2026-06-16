@@ -56,6 +56,23 @@
       </div>
     {{/if}}
 
+    {{#if hasWeapon}}
+      <div class="roll-section weapon">
+        <div class="section-header flexrow flex-between">
+          <span class="section-label">{{weaponLabel}}</span>
+        </div>
+        <div class="dice-row">
+          {{#each weaponDice as |die|}}
+            <img
+              src="systems/spn-system/assets/dice/red-dice-{{die.result}}.png"
+              class="die weapon-die"
+              title="{{die.result}}"
+            />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+
     {{#if hasModifier}}
       <div class="roll-section modifier">
         <div class="section-header flexrow flex-between">
