@@ -237,6 +237,48 @@ export class SPNSystemActorSheet extends ActorSheet {
 
     html.on("click", ".weapon-attack", this._onWeaponAttack.bind(this));
 
+    html.on("change", ".weapon-ammo-input", async (ev) => {
+      const itemId = ev.currentTarget.dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      if (!item) return;
+      const newValue = Math.max(0, Math.min(Number(ev.currentTarget.value), item.system.ammo.max));
+      await item.update({ "system.ammo.value": newValue });
+    });
+
+    html.on("change", ".weapon-reserve-input", async (ev) => {
+      const itemId = ev.currentTarget.dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      if (!item) return;
+      const newValue = Math.max(0, Number(ev.currentTarget.value));
+      await item.update({ "system.ammo.reserve": newValue });
+    });
+
+    html.on("click", ".weapon-reload", async (ev) => {
+      ev.preventDefault();
+      const itemId = ev.currentTarget.dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      if (!item) return;
+
+      const ammo = item.system.ammo;
+      const needed = ammo.max - ammo.value;
+
+      if (needed <= 0) {
+        ui.notifications.info(`${item.name}: caricatore già pieno.`);
+        return;
+      }
+      if (ammo.reserve <= 0) {
+        ui.notifications.warn(`${item.name}: nessuna munizione di riserva!`);
+        return;
+      }
+
+      const taken = Math.min(needed, ammo.reserve);
+      await item.update({
+        "system.ammo.value": ammo.value + taken,
+        "system.ammo.reserve": ammo.reserve - taken,
+      });
+      ui.notifications.info(`${item.name}: ricaricata (+${taken} colpi).`);
+    });
+
     html.on("click", ".effect-control", (ev) => {
       const row = ev.currentTarget.closest("li");
       const document =
@@ -286,6 +328,12 @@ export class SPNSystemActorSheet extends ActorSheet {
     if (!item || item.type !== "weapon") return;
 
     const weapon = item.system;
+
+    if (weapon.type === "firearm" && weapon.ammo.max > 0 && weapon.ammo.value <= 0) {
+      ui.notifications.warn(`${item.name}: arma scarica! Ricarica prima di attaccare.`);
+      return;
+    }
+
     const attrs = this.actor.system.attributes;
     const skills = this.actor.system.skills;
     const defaultAttr = weapon.type === "firearm" || weapon.type === "throwing" ? "agilita" : "forza";
@@ -413,6 +461,16 @@ export class SPNSystemActorSheet extends ActorSheet {
                     },
                   },
                 });
+
+                if (weapon.type === "firearm" && weapon.ammo.max > 0) {
+                  const newAmmo = Math.max(0, weapon.ammo.value - 1);
+                  await item.update({ "system.ammo.value": newAmmo });
+                  if (newAmmo === 0 && weapon.ammo.reserve === 0) {
+                    ui.notifications.warn(`${item.name}: caricatore e riserva esauriti!`);
+                  } else if (newAmmo === 0) {
+                    ui.notifications.warn(`${item.name}: caricatore vuoto — ricarica necessaria.`);
+                  }
+                }
               })();
             },
           },

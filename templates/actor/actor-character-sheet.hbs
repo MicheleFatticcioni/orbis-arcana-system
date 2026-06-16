@@ -165,7 +165,8 @@
                   <div class="weapon-col weapon-col-type">{{localize "SPN_SYSTEM.WEAPON.TYPE"}}</div>
                   <div class="weapon-col weapon-col-damage">{{localize "SPN_SYSTEM.WEAPON.DAMAGE"}}</div>
                   <div class="weapon-col weapon-col-range">{{localize "SPN_SYSTEM.WEAPON.RANGE"}}</div>
-                  <div class="weapon-col weapon-col-ammo">{{localize "SPN_SYSTEM.WEAPON.AMMO"}}</div>
+                  <div class="weapon-col weapon-col-ammo">{{localize "SPN_SYSTEM.WEAPON.MAGAZINE"}}</div>
+                  <div class="weapon-col weapon-col-reserve">{{localize "SPN_SYSTEM.WEAPON.RESERVE"}}</div>
                   <div class="weapon-col weapon-col-condition">{{localize "SPN_SYSTEM.WEAPON.HEALTH_STATUS"}}</div>
                   <div class="weapon-col weapon-col-controls">
                     <a class="item-create" data-type="weapon" title="Aggiungi Arma"><i class="fas fa-plus"></i></a>
@@ -183,7 +184,29 @@
                     <div class="weapon-col weapon-col-range">{{item.system.range_meters}}</div>
                     <div class="weapon-col weapon-col-ammo">
                       {{#if (eq item.system.type "firearm")}}
-                        {{item.system.ammo.value}}/{{item.system.ammo.max}}
+                        <input
+                          class="weapon-ammo-input"
+                          type="number"
+                          min="0"
+                          max="{{item.system.ammo.max}}"
+                          value="{{item.system.ammo.value}}"
+                          data-item-id="{{item._id}}"
+                        />
+                        <span class="ammo-max">/{{item.system.ammo.max}}</span>
+                      {{else}}
+                        —
+                      {{/if}}
+                    </div>
+                    <div class="weapon-col weapon-col-reserve">
+                      {{#if (eq item.system.type "firearm")}}
+                        <input
+                          class="weapon-reserve-input"
+                          type="number"
+                          min="0"
+                          value="{{item.system.ammo.reserve}}"
+                          data-item-id="{{item._id}}"
+                        />
+                        <a class="item-control weapon-reload" data-item-id="{{item._id}}" title="Ricarica caricatore"><i class="fas fa-rotate-right"></i></a>
                       {{else}}
                         —
                       {{/if}}

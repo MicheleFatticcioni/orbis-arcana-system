@@ -94,7 +94,8 @@
       "range_meters": "",
       "ammo": {
         "value": 0,
-        "max": 0
+        "max": 0,
+        "reserve": 0
       },
       "cost_euro": 0,
       "health_status": {

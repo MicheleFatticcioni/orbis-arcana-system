@@ -59,6 +59,8 @@
       "TYPE_RANGED": "Ranged Weapon",
       "RANGE": "Range",
       "AMMO": "Ammo",
+      "MAGAZINE": "Magazine",
+      "RESERVE": "Reserve",
       "COST": "Cost (€)",
       "HEALTH_STATUS": "Status",
       "QUALITY": "Quality"

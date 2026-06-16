@@ -64,6 +64,8 @@
       "TYPE_RANGED": "Arma da Fuoco",
       "RANGE": "Gittata",
       "AMMO": "Munizioni",
+      "MAGAZINE": "Caricatore",
+      "RESERVE": "Riserva",
       "COST": "Costo (€)",
       "HEALTH_STATUS": "Stato",
       "QUALITY": "Qualità"

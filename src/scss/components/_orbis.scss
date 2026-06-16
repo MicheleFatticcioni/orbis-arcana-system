@@ -296,21 +296,74 @@ h1, h2, h3 {
       text-align: center;
     }
     &.weapon-col-damage {
-      flex: 0 0 50px;
+      flex: 0 0 48px;
       text-align: center;
       font-family: 'Cinzel', serif;
       font-size: 0.9em;
       color: var(--text-color);
     }
+    &.weapon-col-range {
+      flex: 0 0 64px;
+      text-align: center;
+      font-size: 0.82em;
+      color: var(--text-muted);
+    }
+    &.weapon-col-ammo {
+      flex: 0 0 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+
+      .weapon-ammo-input {
+        width: 32px;
+        padding: 1px 3px;
+        text-align: center;
+        font-size: 0.85em;
+        background: var(--input-bg, #faf3e0);
+        border: 1px solid var(--border-light, #e0ccaa);
+        border-radius: 2px;
+        color: var(--text-color);
+      }
+      .ammo-max {
+        font-size: 0.82em;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+    }
+    &.weapon-col-reserve {
+      flex: 0 0 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+
+      .weapon-reserve-input {
+        width: 38px;
+        padding: 1px 3px;
+        text-align: center;
+        font-size: 0.85em;
+        background: var(--input-bg, #faf3e0);
+        border: 1px solid var(--border-light, #e0ccaa);
+        border-radius: 2px;
+        color: var(--text-color);
+      }
+      .weapon-reload {
+        flex-shrink: 0;
+        color: var(--text-muted);
+        font-size: 12px;
+        &:hover { color: var(--primary-color); }
+      }
+    }
     &.weapon-col-condition {
-      flex: 0 0 90px;
+      flex: 0 0 88px;
       text-align: center;
     }
     &.weapon-col-controls {
-      flex: 0 0 60px;
+      flex: 0 0 72px;
       display: flex;
       justify-content: flex-end;
-      gap: 6px;
+      gap: 5px;
 
       a {
         color: var(--text-muted);
